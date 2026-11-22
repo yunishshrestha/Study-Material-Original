@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 
+    Local Storage
+    localStorage.setItem("key", "value") - sets a value in local storage
+    -->
+    <script>
+        // localStorage.setItem("name", "Yunish");
+        // localStorage.setItem("age", "20");
+        // localStorage.setItem("isAdmin", true);
+        let name = localStorage.getItem("name");
+        let age = Number(localStorage.getItem("age"));
+        document.write("Name: ", name, "<br>");
+        document.write("Age: ", age);
+        document.write("<br> Age: ", typeof age);
+
+        let isAdmin = Boolean(localStorage.getItem("isAdmin"));
+        document.write("<br> isAdmin: ", isAdmin);
+        document.write("<br> isAdmin: ", typeof isAdmin);
+
+        //JSON.stringify() - converts a JavaScript object into a JSON string
+        //JSON.parse() - converts a JSON string into a JavaScript object    
+        
+        let person = {
+            name: "Yunish",age: 20,isAdmin: true
+        }
+        localStorage.setItem("person", JSON.stringify(person))
+        
+        let fruits = ["apple", "banana", "orange"];
+        localStorage.setItem("fruits", JSON.stringify(fruits));
+
+        let newfruits = JSON.parse(localStorage.getItem("fruits"));
+        document.write("<br> fruits: ", newfruits);
+        document.write("<br>Fruits Length: ", newfruits.length);
+
+        
+
+        let newperson = JSON.parse(localStorage.getItem("person"));
+        document.write("<br> New person: ", newperson);
+
+
+        localStorage.removeItem("name");
+        localStorage.removeItem("age");
+        localStorage.clear();
+
+        
+
+
+    </script>
+</body>
+
+</html>

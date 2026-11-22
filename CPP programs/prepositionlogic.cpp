@@ -1,148 +1,154 @@
-#include <iostream>
-#include <cstdlib>
+#include <stdio.h>
+#include <stdlib.h>
 
-using namespace std;
+struct node
+{
+    int data;
+    struct node *next;
+};
 
-void find_truth_table_of_conjunction() {
-    int p[4], q[4], pnq[4];
+struct node *start = NULL;
 
-    cout << "Enter the elements for p either 0 or 1:" << endl;
-    for (int i = 0; i < 4; i++)
-        cin >> p[i];
 
-    cout << "Enter the elements for q either 0 or 1:" << endl;
-    for (int i = 0; i < 4; i++)
-        cin >> q[i];
+void insert_at_begin(int);
+void insert_pos();
+void insert_end();
+void traverse();
 
-    for (int i = 0; i < 4; i++)
-        pnq[i] = p[i] & q[i];
+int main()
+{
+    int choice, data;
 
-    cout << "The truth table for the conjunction is:" << endl;
-    cout << "p\tq\tp^q" << endl;
-    for (int i = 0; i < 4; i++)
-        cout << p[i] << "\t" << q[i] << "\t" << pnq[i] << endl;
-}
+    while (1)
+    {
+        printf("\n1. Insert at beginning\n");
+        printf("2. Insert at end\n");
+        printf("3. Insert at any position\n");
+        printf("4. Traverse\n");
+        printf("5. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
 
-void find_truth_table_of_Disjunction() {
-    int p[4], q[4], porq[4];
+        switch (choice)
+        {
+        case 1:
+            printf("Enter value of element: ");
+            scanf("%d", &data);
+            insert_at_begin(data);
+            break;
 
-    cout << "Enter the elements for p either 0 or 1:" << endl;
-    for (int i = 0; i < 4; i++)
-        cin >> p[i];
+        case 2:
+            insert_end();
+            break;
 
-    cout << "Enter the elements for q either 0 or 1:" << endl;
-    for (int i = 0; i < 4; i++)
-        cin >> q[i];
+        case 3:
+            insert_pos();
+            break;
 
-    for (int i = 0; i < 4; i++)
-        porq[i] = p[i] | q[i];
+        case 4:
+            traverse();
+            break;
 
-    cout << "The truth table for the Disjunction is:" << endl;
-    cout << "p\tq\tp|q" << endl;
-    for (int i = 0; i < 4; i++)
-        cout << p[i] << "\t" << q[i] << "\t" << porq[i] << endl;
-}
+        case 5:
+            exit(0);
 
-void find_truth_table_of_Negation() {
-    int p[2], np[2];
-
-    cout << "Enter the elements for p either 0 or 1:" << endl;
-    for (int i = 0; i < 2; i++)
-        cin >> p[i];
-
-    for (int i = 0; i < 2; i++)
-        np[i] = !p[i];
-
-    cout << "The truth table for Negation is:" << endl;
-    cout << "p\t!p" << endl;
-    for (int i = 0; i < 2; i++)
-        cout << p[i] << "\t" << np[i] << endl;
-}
-
-void find_truth_table_of_implication() {
-    int p[4], q[4], pimq[4];
-
-    cout << "Enter the elements for p either 0 or 1:" << endl;
-    for (int i = 0; i < 4; i++)
-        cin >> p[i];
-
-    cout << "Enter the elements for q either 0 or 1:" << endl;
-    for (int i = 0; i < 4; i++)
-        cin >> q[i];
-
-    for (int i = 0; i < 4; i++) {
-        if (p[i] == 1 && q[i] == 0)
-            pimq[i] = 0;
-        else
-            pimq[i] = 1;
-    }
-
-    cout << "The truth table for the Implication is:" << endl;
-    cout << "p\tq\tp->q" << endl;
-    for (int i = 0; i < 4; i++)
-        cout << p[i] << "\t" << q[i] << "\t" << pimq[i] << endl;
-}
-
-void find_truth_table_of_Bi_implication() {
-    int p[4], q[4], pbiimg[4];
-
-    cout << "Enter the elements for p either 0 or 1:" << endl;
-    for (int i = 0; i < 4; i++)
-        cin >> p[i];
-
-    cout << "Enter the elements for q either 0 or 1:" << endl;
-    for (int i = 0; i < 4; i++)
-        cin >> q[i];
-
-    for (int i = 0; i < 4; i++) {
-        if ((p[i] == 1 && q[i] == 1) || (p[i] == 0 && q[i] == 0))
-            pbiimg[i] = 1;
-        else
-            pbiimg[i] = 0;
-    }
-
-    cout << "The truth table for the Bi-implication is:" << endl;
-    cout << "p\tq\tp<->q" << endl;
-    for (int i = 0; i < 4; i++)
-        cout << p[i] << "\t" << q[i] << "\t" << pbiimg[i] << endl;
-}
-
-int main() {
-    int choice;
-
-    while (1) {
-        cout << "\n1. Print the truth table for Conjunction:" << endl;
-        cout << "2. Print the truth table for Disjunction:" << endl;
-        cout << "3. Print the truth table for Implication:" << endl;
-        cout << "4. Print the truth table for Negation:" << endl;
-        cout << "5. Print the truth table for Bi-implication:" << endl;
-        cout << "6. Exit:" << endl;
-        cout << "Enter the choice:" << endl;
-
-        cin >> choice;
-
-        switch (choice) {
-            case 1:
-                find_truth_table_of_conjunction();
-                break;
-            case 2:
-                find_truth_table_of_Disjunction();
-                break;
-            case 3:
-                find_truth_table_of_implication();
-                break;
-            case 4:
-                find_truth_table_of_Negation();
-                break;
-            case 5:
-                find_truth_table_of_Bi_implication();
-                break;
-            case 6:
-                exit(0);
-            default:
-                cout << "The choice you entered is not correct." << endl;
+        default:
+            printf("Invalid choice. Try again.\n");
         }
     }
+}
 
-    return 0;
+
+void insert_at_begin(int x)
+{
+    struct node *temp;
+    temp = (struct node *)malloc(sizeof(struct node));
+
+    temp->data = x;
+    temp->next = start;
+    start = temp;
+}
+
+
+void insert_pos()
+{
+    struct node *temp, *ptr;
+    int pos, i;
+
+    temp = (struct node *)malloc(sizeof(struct node));
+
+    printf("Enter position: ");
+    scanf("%d", &pos);
+
+    printf("Enter data: ");
+    scanf("%d", &temp->data);
+
+    if (pos == 0)
+    {
+        temp->next = start;
+        start = temp;
+        return;
+    }
+
+    ptr = start;
+    for (i = 0; i < pos - 1; i++)
+    {
+        if (ptr == NULL)
+        {
+            printf("Position not found\n");
+            return;
+        }
+        ptr = ptr->next;
+    }
+
+    temp->next = ptr->next;
+    ptr->next = temp;
+}
+
+
+void insert_end()
+{
+    struct node *temp, *ptr;
+
+    temp = (struct node *)malloc(sizeof(struct node));
+
+    printf("Enter data: ");
+    scanf("%d", &temp->data);
+
+    temp->next = NULL;
+
+    if (start == NULL)
+    {
+        start = temp;
+    }
+    else
+    {
+        ptr = start;
+        while (ptr->next != NULL)
+        {
+            ptr = ptr->next;
+        }
+        ptr->next = temp;
+    }
+}
+
+
+void traverse()
+{
+    struct node *ptr;
+
+    if (start == NULL)
+    {
+        printf("List is empty\n");
+        return;
+    }
+
+    ptr = start;
+    printf("Linked List: ");
+    while (ptr != NULL)
+    {
+        printf("%d  ", ptr->data);
+        ptr = ptr->next;
+    }
+    printf("NULL\n");
 }

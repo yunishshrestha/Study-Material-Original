@@ -1,0 +1,130 @@
+#include <graphics.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <conio.h>
+#include <math.h>
+
+void lineDDA(int x1, int y1, int x2, int y2, int colour);
+void lineBresenham(int x1, int y1, int x2, int y2, int colour);
+
+int main(void)
+{
+    int gdriver = DETECT, gmode, errorcode;
+    int choice, x1, y1, x2, y2;
+
+    initgraph(&gdriver, &gmode, "C:\\TURBOC3\\BGI");
+    errorcode = graphresult();
+    if (errorcode != grOk)
+    {
+        printf("Graphics error: %s\n", grapherrormsg(errorcode));
+        printf("Press any key to halt:");
+        getch();
+        exit(1);
+    }
+
+    do {
+        cleardevice();
+        printf("\nMenu:");
+        printf("\n1. Draw line using DDA Algorithm");
+        printf("\n2. Draw line using Bresenham Algorithm");
+        printf("\n3. Exit");
+        printf("\nEnter your choice: ");
+        scanf("%d", &choice);
+
+        if (choice == 1 || choice == 2) {
+            printf("Enter x1, y1: ");
+            scanf("%d %d", &x1, &y1);
+            printf("Enter x2, y2: ");
+            scanf("%d %d", &x2, &y2);
+        }
+
+        switch (choice) {
+            case 1:
+                lineDDA(x1, y1, x2, y2, 1);
+                break;
+            case 2:
+                lineBresenham(x1, y1, x2, y2, 2);
+                break;
+            case 3:
+                printf("Exiting program.\n");
+                closegraph();
+                exit(0);
+            default:
+                printf("Invalid choice.\n");
+        }
+
+        getch();
+    } while (1);
+
+    return 0;
+}
+
+void lineDDA(int x1, int y1, int x2, int y2, int colour)
+{
+    int dx, dy, steps, k;
+    float xincr, yincr, xk, yk;
+
+    dx = x2 - x1;
+    dy = y2 - y1;
+
+    if (abs(dx) > abs(dy))
+        steps = abs(dx);
+    else
+        steps = abs(dy);
+
+    xincr = dx / (float)steps;
+    yincr = dy / (float)steps;
+
+    xk = x1;
+    yk = y1;
+
+    for (k = 0; k <= steps; k++)
+    {
+        putpixel((int)xk, (int)yk, colour);
+        xk += xincr;
+        yk += yincr;
+    }
+}
+
+void lineBresenham(int x1, int y1, int x2, int y2, int colour)
+{
+    int dx = abs(x2 - x1);
+    int dy = abs(y2 - y1);
+    int p, x, y;
+    int incx = (x2 > x1) ? 1 : -1;
+    int incy = (y2 > y1) ? 1 : -1;
+
+    x = x1;
+    y = y1;
+
+    if (dx > dy) {
+        p = 2 * dy - dx;
+        for (int i = 0; i <= dx; i++) {
+            putpixel(x, y, colour);
+            x += incx;
+            if (p < 0)
+                p += 2 * dy;
+            else {
+                y += incy;
+                p += 2 * (dy - dx);
+            }
+        }
+    } else {
+        p = 2 * dx - dy;
+        for (int i = 0; i <= dy; i++) {
+            putpixel(x, y, colour);
+            y += incy;
+            if (p < 0)
+                p += 2 * dx;
+            else {
+                x += incx;
+                p += 2 * (dx - dy);
+            }
+        }
+    }
+}
+
+
+
+
+

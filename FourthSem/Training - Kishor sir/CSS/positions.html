@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            height: 300px;
+            width: 300px;
+            margin: auto;
+
+
+        }
+
+        .static {
+            background-color: blue;
+            position: static;
+        }
+
+        .relative {
+            background-color: green;
+            position: relative;
+            top: 30px;
+            left: 30px;
+            /* bottom: 40px; */
+            /* right: 40px; */
+        }
+
+        .absolute1 {
+            background-color: red;
+            position: absolute;
+            /* top: 50px; */
+            /* left: 50px; */
+            bottom: 50px;
+            right: 50px;
+        }
+
+        .absolute2 {
+            background-color: yellow;
+            height: 50px;
+            width: 50px;
+            position: absolute;
+            left: 50px;
+            /* right: 50px; */
+        }
+
+        .fixed {
+            background-color: rgb(209, 69, 118);
+            height: 50px;
+            width: 50px;
+            position: fixed;
+            /* left: 50px; */
+            right: 50px;
+        }
+
+        .nav {
+            height: 50px;
+            width: 100%;
+            background-color: black;
+            position: sticky;
+            top: 15px;
+            bottom: 10px;
+            z-index: 99;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="static"></div>
+    <div class="static"></div>
+    <div class="static"></div>
+    <div class="static"></div>
+    <div class="static"></div>
+    <div class="static"></div>
+    <div class="static"></div>
+    <div class="static">
+        <div class="fixed"></div>
+        <div class="absolute2"></div>
+    </div>
+    <div class="nav"></div>
+    <div class="relative">
+        <div class="absolute2"></div>
+    </div>
+    <div class="static"></div>
+    <div class="absolute1">
+        <div class="absolute2"></div>
+    </div>
+    <div class="static"></div>
+
+</body>
+
+</html>

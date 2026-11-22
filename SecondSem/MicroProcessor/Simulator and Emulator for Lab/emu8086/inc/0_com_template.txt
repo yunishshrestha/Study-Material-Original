@@ -1,0 +1,8 @@
+
+org  100h	; set location counter to 100h
+
+
+; add your code here
+
+
+

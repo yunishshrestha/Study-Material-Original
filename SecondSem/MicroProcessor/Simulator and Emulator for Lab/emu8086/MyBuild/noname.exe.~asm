@@ -1,0 +1,46 @@
+TITLE TO LOWERCASE INTO UPPER CASE
+
+; .model SMALL
+SSEG    SEGMENT STACK   'STACK'
+        DB       100H    DUP('T')
+SSEG    ENDS     
+DSEG    SEGMENT 'DATA'
+        ARR DW 2345H
+        ARR1 DW 3456H
+        ARR2 DW 0000H
+        ARR3 DW 0000H
+DSEG    ENDS
+CSEG    SEGMENT 'CODE'
+        MAIN PROC
+                MOV AX,DSEG
+                MOV DS,AX                 ; MUL1 += COUNTER
+                
+                MOV BX,ARR
+                
+                SUB BX,ARR1
+                JNC DOWN
+                INC ARR3
+        DOWN:        
+                MOV ARR2,BX
+                
+                
+                
+        
+                
+                                                                ;a=97  A=65   -32 => 20H
+                
+                
+                
+                MOV AH,4CH
+                INT 21H
+                
+        MAIN ENDP
+CSEG    ENDS
+END MAIN
+                
+                
+                
+                
+
+
+

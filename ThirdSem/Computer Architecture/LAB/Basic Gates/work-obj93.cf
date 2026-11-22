@@ -1,0 +1,43 @@
+v 4
+file . "xnorl_tb.vhdl" "2e14035763ba8d5d254820eda30561d40da8f032" "20251210130723.540":
+  entity xnorl_tb at 1( 0) + 0 on 63;
+  architecture test of xnorl_tb at 7( 84) + 0 on 64;
+file . "xorl_tb.vhdl" "632fd7dd84b24f526c29f14c31eff4c9fbfcb2ea" "20251220112344.300":
+  entity xorl_tb at 1( 0) + 0 on 71;
+  architecture test of xorl_tb at 7( 82) + 0 on 72;
+file . "norl_tb.vhdl" "749b0c28d68f421d73a25a6570c6fbaecf1c9bd3" "20251210130328.193":
+  entity norl_tb at 1( 0) + 0 on 55;
+  architecture test of norl_tb at 7( 82) + 0 on 56;
+file . "nandl_tb.vhdl" "879e721af454583304dc3edfa452a0477d2ef6bb" "20251210130147.456":
+  entity nandl_tb at 1( 0) + 0 on 51;
+  architecture test of nandl_tb at 7( 84) + 0 on 52;
+file . "notl.vhdl" "6e3c9f6ca603356241baad68616d38ef3d5f9159" "20251220112213.845":
+  entity notl at 1( 0) + 0 on 65;
+  architecture behave of notl at 11( 117) + 0 on 66;
+file . "orl.vhdl" "991bac786c142be6c2c95ef404a6a4bdc919c62d" "20251210125623.768":
+  entity orl at 1( 0) + 0 on 41;
+  architecture behave of orl at 11( 113) + 0 on 42;
+file . "andl_tb.vhdl" "46e2cdfa68a989dae58000c100fdbb35742644f0" "20251210125109.835":
+  entity andl_tb at 1( 0) + 0 on 39;
+  architecture test of andl_tb at 5( 78) + 0 on 40;
+file . "andl.vhdl" "2bf781acb1ce133a585e299f924c36e31674b927" "20251210125109.818":
+  entity andl at 1( 0) + 0 on 37;
+  architecture behave of andl at 9( 121) + 0 on 38;
+file . "orl_tb.vhdl" "1135768fd2821f9a037086750738194d2b661275" "20251210125623.786":
+  entity orl_tb at 1( 0) + 0 on 43;
+  architecture test of orl_tb at 5( 76) + 0 on 44;
+file . "notl_tb.vhdl" "d23dba96bf690d9716acc1707d22c0ee95cd8168" "20251220112213.884":
+  entity notl_tb at 1( 0) + 0 on 67;
+  architecture test of notl_tb at 6( 80) + 0 on 68;
+file . "nandl.vhdl" "880d844d60f89304f1eaaa1212da1b8c825d8237" "20251210130147.437":
+  entity nandl at 1( 0) + 0 on 49;
+  architecture behave of nandl at 9( 123) + 0 on 50;
+file . "norl.vhdl" "618c06b2f314c5aad58a3aad4b1265160d227a20" "20251210130328.175":
+  entity norl at 1( 0) + 0 on 53;
+  architecture behave of norl at 9( 121) + 0 on 54;
+file . "xorl.vhdl" "53415409ff7fa7d187a76a205d2c2cec22381010" "20251220112344.262":
+  entity xorl at 1( 0) + 0 on 69;
+  architecture behave of xorl at 9( 121) + 0 on 70;
+file . "xnorl.vhdl" "5a9a070dcdb225171244f4e180143a7e492f0826" "20251210130723.521":
+  entity xnorl at 1( 0) + 0 on 61;
+  architecture behave of xnorl at 9( 123) + 0 on 62;

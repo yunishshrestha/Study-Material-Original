@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        h1,
+        p,
+        li {
+            color: blue;
+        }
+        .parent h1{
+            color: aqua;
+        }
+        .parent>h1{
+            text-decoration: underline;
+        }
+        .parent~h1{
+            text-align: right;
+        }
+        .parent+h1{
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 
+        Combinators
+        1. Grouping Combinators
+            we can use comma (,) to apply styles to multiple elements.
+        2. Descendent Combinators
+            use space( ) between the parent and descending element.
+        3. Child Combinators
+           greater than symbol (>) symbol between the parent and the child element
+        4. Siblings Combinator
+            general siblings
+                use tilde(~) between the siblings
+            adjacent siblings
+                use plus (+) between the siblings
+    -->
+    <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Hic, voluptatum labore! Eligendi neque dolore nisi
+        suscipit odio iure mollitia nam qui, quia tempora maiores consequuntur dignissimos, minus excepturi iusto
+        repellat!
+    </p>
+    <h1>not a descendent</h1>
+
+    <li>List Item</li>
+
+    <div class="parent">
+
+        <h1>Descendent,child</h1>
+
+        <div>
+            Descendent, not a child
+
+            <div>
+                Descendent, not a child
+            </div>
+        </div>
+        <h1>Descendent, child</h1>
+    </div>
+    <h1>Not descendent, general sibling, adjacent sibling</h1>
+    <h1>Not descendent, general sibling</h1>
+    <h1>Not descendent, general sibling</h1>
+    <h1>Not descendent, general sibling</h1>
+    <h1>Not descendent, general sibling</h1>
+    <h1>Not descendent, general sibling</h1>
+  
+</body>
+
+</html>

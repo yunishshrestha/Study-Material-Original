@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- Regular Expressions
+     /abc/ -> regular expression literal = abc
+     [abc] -> character class collection = a or b or c
+     [^abc] -> negated character class = not a or b or c
+     [0-9] -> range of characters = 0 to 9  
+     [a-z] -> range of characters = a to z
+     [A-Z] -> range of characters = A to Z
+     [a-zA-Z] -> range of characters = a to z or A to Z
+     [0-9a-zA-Z] -> range of characters = 0 to 9 or a to z or A to Z
+     [^0-9] -> negated character class = not 0 to 9
+     [^a-z] -> negated character class = not a to z
+     [^A-Z] -> negated character class = not A to Z
+     [^a-zA-Z] -> negated character class = not a to z or A to Z
+     [^0-9a-zA-Z] -> negated character class = not 0 to 9 or a to z or A to Z
+        \d -> digit = 0 to 9
+        /[!@#$%^&*()_+]/ -> special characters
+        /[]/ -> space characters
+        \D -> not a digit = not 0 to 9
+        . -> any character except newline
+        \s -> whitespace character = space, tab, newline
+        \S -> not a whitespace character = not space, tab, newline
+        \w -> word character = a to z or A to Z or 0 to
+    9 or _
+        \W -> not a word character = not a to z or A to Z or 0 to 9 or _
+        ^ -> start of string
+        $ -> end of string
+        * -> zero or more occurrences
+        + -> one or more occurrences
+        ? -> zero or one occurrence
+        {n} -> exactly n occurrences
+        {n,} -> n or more occurrences
+        {n,m} -> between n and m occurrences
+        | -> OR operator
+        () -> group of characters
+        /i -> case insensitive
+        /g -> global search
+        /m -> multi-line search
+
+
+        ^ -> start of string
+        $ -> end of string
+        * -> zero or more occurrences
+        + -> one or more occurrences
+        ? -> zero or one occurrence
+        
+        {5} -> exactly 5 occurrences
+        {5,} -> 5 or more occurrences
+        {5,10} -> between 5 and 10 occurrences
+        eg a{5} -> aaaaa
+        eg a{5,} -> aaaaaa  
+        a{5,10} -> aaaaa, aaaaaa, aaaaaaa, aaaaaaaa, aaaaaaaaa, aaaaaaaaaa
+    -->
+     <script>
+        let str = "JavaScript"
+        let expr = /t$/i
+        document.write(str.match(expr));
+     </script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+Your Student record
+Name =Manoj Rai
+Age = 18
+Address = Jhapa, Birtamode

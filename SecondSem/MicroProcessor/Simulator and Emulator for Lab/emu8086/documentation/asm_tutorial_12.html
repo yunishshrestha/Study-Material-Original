@@ -1,0 +1,206 @@
+
+<HTML>
+
+<HEAD>
+
+<TITLE>8086 Assembler Tutorial for Beginners (Part 12)</TITLE>
+
+<META name="description" content="Controlling External Devices">
+
+<META name="keywords" content="external, devices, 8086, traffic lights, stepper motor, robot">
+
+
+
+</HEAD>
+
+<BODY bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#0000FF" alink="#FF0000">
+
+
+
+
+
+
+<FONT FACE="Verdana" SIZE=3>
+
+
+
+<FONT SIZE=+1>
+<B>8086 Assembler Tutorial for Beginners (Part 12)</B>
+</FONT>
+
+
+
+<BR><BR>
+
+<FONT SIZE=+2><B>Controlling External Devices</B></FONT>
+<BR><BR><BR>
+
+There are 7 devices attached to the emulator: traffic lights, stepper-motor, LED display, thermometer, printer,
+robot and simple test device. You can view devices when you click "<B>Virtual Devices</B>" menu of the emulator.<BR><BR>
+
+For technical information see <A HREF="io.html"><B>I/O ports</B></A> section of emu8086
+reference.<BR><BR>
+In general, it is possible to use any x86 family CPU to control all kind of devices,
+the difference maybe in base I/O port number, this can be altered using some tricky
+electronic equipment. Usually the "<B>.bin</B>" file is written into the Read Only
+Memory (ROM) chip, the system reads program from that chip, loads it in RAM module
+and runs the program. This principle is used for many modern devices such
+as micro-wave ovens and etc...
+<BR><BR>
+
+<HR>
+<BR>
+
+<B>Traffic Lights</B><BR><BR>
+
+<IMG SRC="img/traffic.gif">
+
+<BR><BR>
+Usually to control the traffic lights an array (table) of values is used. In
+certain periods of time the value is read from the array and sent to a port.
+For example: <BR><BR>
+<TABLE BORDER=1 CELLPADDING=10 WIDTH=70%><TR><TD>
+<PRE>
+<FONT FACE="Fixedsys">
+; directive to create BIN file:
+#make_bin#
+#CS=500#
+#DS=500#
+#SS=500#
+#SP=FFFF#
+#IP=0#
+
+; skip the data table:
+JMP start
+
+table DW 100001100001b
+      DW 110011110011b
+      DW 001100001100b
+      DW 011110011110b
+
+start:
+
+MOV SI, 0
+
+; set loop counter to number
+; of elements in table:
+MOV CX, 4
+
+next_value:
+
+; get value from table:
+MOV AX, table[SI]
+
+; set value to I/O port
+; of traffic lights:
+OUT 4, AX
+
+; next word:
+ADD SI, 2
+
+CALL PAUSE
+
+LOOP next_value
+
+; start from over from
+; the first value
+JMP start
+
+; ==========================
+PAUSE PROC
+; store registers:
+PUSH CX
+PUSH DX
+PUSH AX
+
+; set interval (1 million
+; microseconds - 1 second):
+MOV     CX, 0Fh
+MOV     DX, 4240h
+MOV     AH, 86h
+INT     15h
+
+; restore registers:
+POP AX
+POP DX
+POP CX
+RET
+PAUSE ENDP
+; ==========================</FONT></PRE>
+</TD></TR></TABLE>
+
+<BR><BR>
+
+<HR>
+
+<BR>
+<B>Stepper-Motor</B>
+<BR><BR>
+
+<IMG SRC="img/stepper.gif" WIDTH=237 HEIGHT=215>
+
+<BR><BR>
+
+The motor can be half stepped by turning on pair of
+magnets, followed by a single and so on.<BR><BR>
+
+The motor can be full stepped by turning on pair of magnets, followed
+by another pair of magnets and in the end followed by a single magnet and so on.
+The best way to make full step is to make two half steps.<BR><BR>
+
+Half step is equal to <B>11.25</B> degrees.<BR>
+Full step is equal to <B>22.5</B> degrees.<BR><BR>
+
+The motor can be turned both clock-wise and counter-clock-wise.<BR><BR>
+
+See <A HREF="exp/stepper_motor.asm"><B>stepper_motor.asm</B></A>
+in c:\emu8086\examples.
+<BR><BR>
+See also <A HREF="io.html"><B>I/O ports</B></A> section of emu8086
+reference.<BR><BR>
+
+<BR><BR>
+
+<HR>
+
+<BR>
+<B>Robot</B>
+<BR><BR>
+
+<IMG SRC="img/robot.gif" WIDTH=530 HEIGHT=352>
+
+<BR><BR>
+Complete list of robot instruction set is given in
+<A HREF="io.html"><B>I/O ports</B></A> section of emu8086
+reference.<BR><BR>
+
+To control the robot a complex algorithm should be used to achieve
+maximum efficiency. The simplest, yet very inefficient, is random moving
+algorithm, see <A HREF="exp/robot.asm"><B>robot.asm</B></A> in c:\emu8086\examples.
+
+<BR><BR>
+It is also possible to use a data table (just like for Traffic Lights), this
+can be good if robot always works in the same surroundings.
+<BR><BR>
+
+<BR><BR><BR>
+
+<HR>
+<CENTER>
+<A HREF="asm_tutorial_11.html"><B> &lt;&lt;&lt; Previous Part &lt;&lt;&lt; </B></A>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<A HREF="asm_tutorial_end.html"><B> >>> Next Part >>> </B></A>
+</CENTER>
+<HR>
+
+
+
+<BR>
+
+</FONT>
+
+
+
+</BODY>
+
+</HTML>

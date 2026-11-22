@@ -1,0 +1,48 @@
+
+        emu8086 - assembler and emulator of Intel 8086 microprocessor (AMD compatible)
+
+        version 3.27d
+
+
+        what's new:
+        ===========
+
+        step-back button allows to execute instructions backwards.
+
+        font size of logical flag analyser can be modified in emu8086.ini
+
+        keyboard buffer is now visible and can be flushed with a click.
+
+        it is possible to use _ to separate nibbles of long binary values,
+        for example:      mov ax, 1000_0011_0001_1111b
+
+        virtual device from "devices" folder starts automatically when
+        its file name is found anywhere in the source code or in comments.
+
+        all devices are external, source codes of the devices can be found
+        in this folder c:\emu8086\devices\developer\
+
+        all ports from 0 to 65535 are free for custom i/o devices.
+
+        all devices must be recompiled with new location of IO file.
+        new location is: c:\emu8086.io 
+        there is no need to use GetWindowsTemp() API function.
+
+        default code templates can be customised in c:\emu8086\inc 
+
+        debug button loads windows debug.exe after the compilation
+
+        default fonts for memory, emulator screen and disassembly
+        are changed to Terminal, if your system does not have an appropriate
+        Terminal font you can set it back to Fixedsys from options.
+
+        
+        copyright
+        =========
+
+        copyright emu8086 (c) 2005
+
+        www.emu8086.com
+
+
+

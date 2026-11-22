@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!--Loops: to perform similar task repeteadly
+    1. While loop
+        initialization
+        while(condition-check){
+            statements next    
+        }
+              2. Do while loop:
+    inintialization 
+    do{
+        statements next
+    }while(condition-check)
+            initialization - when to start
+            condition-check - when to stop
+            statements - what to repeat
+            next - how to proceed
+
+    3. For loop
+    for(initialization; condition-check; next){
+        statements
+    }
+            -->
+    <script>
+        let choice = true
+        while (choice==true){
+        let a = Number(prompt("Enter first number: "))
+        let b = Number(prompt("Enter second number: "))
+        console.log("Sum = ", a+b)
+        choice= confirm("do you wish to continue?")
+    }
+    </script>
+</body>
+
+</html>

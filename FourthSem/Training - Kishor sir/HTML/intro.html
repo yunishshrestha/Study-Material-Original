@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        h1
+        {
+            color: red;
+            font-size: 45px;
+            text-align: center;
+            text-decoration: underline;
+
+        }
+
+        .first
+        {
+            color: blue;
+        }
+
+        .second
+        {
+            color: green;
+        }
+
+        #MYid
+        {
+            color: rgb(168, 117, 24);
+        }
+
+
+        /* dot for class selector and hash for id selector. Class selector can be used multiple times but id selector can be used only once in a document. */
+        /* if id, class and element selector are applied to the same element, then id selector will have the highest priority, then class selector and then element selector. */ */
+        /* if there are multiple class selectors applied to the same element, then the one that is defined last in the CSS will have the highest priority. */
+        /* class is better to use when you want to apply the same styles to multiple elements, while id is better to use when you want to apply unique styles to a single element. */ */
+
+    </style>
+</head>
+<body>
+
+    css types
+    internal css : written in same html page in style tag
+    external css : written in separate css file and linked to html page using link tag
+    
+
+    <h1>Introduction to CSS</h1>
+    <p>CSS stands for Cascading Style Sheets. It is a stylesheet language used to describe the presentation of a document written in HTML or XML. CSS allows you to control the layout, colors, fonts, and overall appearance of your web pages.</p>
+    <p>With CSS, you can separate the content of your web page from its presentation. This means that you can write your HTML to structure your content, and then use CSS to style it without having to change the HTML. This separation of concerns makes it easier to maintain and update your web pages.</p>
+    <p>CSS works by applying styles to HTML elements. You can target specific elements using
+    <h2>How CSS Works</h2>
+    <p>CSS works by applying styles to HTML elements. You can target specific elements using selectors, and then define the styles you want to apply to those elements. For example, you can change the color of all paragraphs to blue by using the following CSS:</p>
+    <pre>
+        p {
+            color: blue;
+        }
+    </pre>
+    <p>In this example, the selector is "p", which targets all paragraph elements. The declaration block contains the property "color" and its value "blue". This means that all paragraphs on the page will be displayed in blue.</p>      
+    <h2>Basic Syntax</h2>
+    <p>The basic syntax of CSS consists of a selector, followed by a declaration block enclosed in curly braces. The declaration block contains one or more declarations, each consisting of a property and a value, separated by a colon. Declarations are separated by semicolons.</p>
+    <pre>
+        selector {
+            property: value;
+            property: value;
+        }
+    </pre>
+    <p>For example, to change the font size and color of all headings, you can use the following CSS:</p>
+    <pre>
+        h1 {
+            font-size: 24px;
+            color: green;
+        }
+        h2 {
+            font-size: 20px;
+            color: orange;
+        }
+    </pre>
+    <p>In this example, the selector "h1" targets all level 1 headings, while "h2" targets all level 2 headings. The declarations specify the font size and color for each type of heading.</p> 
+
+    <h1 class="first">First</h1>
+    <h1 class="second">Second</h1>
+
+    <p class="first">This is a paragraph with the class "first".</p>
+    
+    
+    <h1 id="MYid">My ID Heading</h1>
+
+    
+    <p class="second">This is a paragraph with the class "second".</p>
+</body>
+</html>

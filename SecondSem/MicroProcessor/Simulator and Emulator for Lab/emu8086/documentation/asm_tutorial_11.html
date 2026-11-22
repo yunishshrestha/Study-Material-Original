@@ -1,0 +1,255 @@
+
+<HTML>
+
+<HEAD>
+
+<TITLE>8086 Assembler Tutorial for Beginners (Part 11)</TITLE>
+
+<META name="description" content="Making your own Operating System">
+
+<META name="keywords" content="operating system, 8086, tutorial, programming, assembler tutorial, tutorial for begginers">
+
+</HEAD>
+
+<BODY bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#0000FF" alink="#FF0000">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <FONT FACE="Verdana" SIZE=3> <FONT SIZE=+1> <B>8086 Assembler Tutorial
+      for Beginners (Part 11)</B> </FONT> <BR>
+      <BR>
+      <FONT SIZE=+2><B>Making your own Operating System</B></FONT> <BR>
+      <BR>
+      <BR>
+      Usually, when a computer starts it will try to load the first 512-byte sector
+      (that's Cylinder <b>0</b>, Head <b>0</b>, Sector <b>1</b>) from any diskette
+      in your <b>A:</b> drive to memory location <B>0000h:7C00h</B> and give it control.
+      If this fails, the BIOS tries to use the MBR of the first hard drive instead.<BR>
+      <BR>
+      This tutorial covers booting up from a floppy drive, the same principles
+      are used to boot from a hard drive. But using a floppy drive has several
+      advantages:
+      <UL>
+        <LI>You can keep your existing operating system intact (Windows, DOS...).<BR>
+          <BR>
+        </LI>
+        <LI>It is easy to modify the boot record of a floppy disk.</LI>
+      </UL>
+      <BR>
+      Example of a simple floppy disk boot program:<BR>
+      <BR>
+      <TABLE BORDER=1 CELLPADDING=10 WIDTH=70%>
+        <TR>
+          <TD>
+            <PRE>
+<FONT FACE="Fixedsys">
+; directive to create BOOT file:
+#make_boot#
+
+; Boot record is loaded at 0000:7C00,
+; so inform compiler to make required
+; corrections:
+ORG 7C00h
+
+PUSH    CS   ; make sure DS=CS
+POP     DS
+
+; load message address into SI register:
+LEA SI, msg
+
+; teletype function id:
+MOV AH, 0Eh
+
+print:   MOV AL, [SI]
+         CMP AL, 0
+         JZ done
+         INT 10h   ; print using teletype.
+         INC SI
+         JMP print
+
+; wait for 'any key':
+done:      MOV AH, 0
+           INT 16h
+
+
+; store magic value at 0040h:0072h:
+;   0000h - cold boot.
+;   1234h - warm boot.
+MOV     AX, 0040h
+MOV     DS, AX
+MOV     w.[0072h], 0000h ; cold boot.
+
+JMP	0FFFFh:0000h	 ; reboot!
+
+
+new_line EQU 13, 10
+
+msg DB  'Hello This is My First Boot Program!'
+    DB  new_line, 'Press any key to reboot', 0
+</FONT></PRE>
+          </TD>
+        </TR>
+      </TABLE>
+      <BR>
+      <BR>
+      Copy the above example to the source editor and press <NOBR>[<B>Emulate</B>]</NOBR>. The emulator automatically loads "<B>.boot</B>"
+      file to <B>0000h:7C00h</B>.
+      <BR><BR>
+
+
+
+
+      You can run it just like a regular program, or you can use the "<B>Virtual
+      Drive</B>" menu to "<B>Write 512 bytes at 7C00h to Boot Sector</B>"
+      of a virtual floppy drive (it's "<B>FLOPPY_0</B>" file in Emulator's folder).
+
+	After your program is written  to the virtual floppy drive, you can select <B>Boot
+		  from floppy</B> from <B>Virtual drive</B> menu.
+
+      <BR>
+      <BR>
+
+      <IMG SRC="img/white_boot_sector.png">
+
+
+      <BR><BR>
+      "<B>.boot</B>" files are limited to 512 bytes (sector size). If your new
+      Operating System is going to grow over this size, you will need to use a
+      boot program to load data from other sectors. A good example of a tiny operating
+      system can be found in c:\emu8086\examples:
+      <BR><BR>
+      <A HREF="exp/micro-os_loader.asm"><B>micro-os_loader.asm</B></A><BR>
+      <A HREF="exp/micro-os_kernel.asm"><B>micro-os_kernel.asm</B></A><BR>
+      <BR>
+      <BR>
+      To create extensions for your operating system (over 512 bytes), you can
+      use additional sectors of a floppy disk. It's recommended to use "<B>.bin</B>" files for this purpose
+      (to create "<B>.bin</B>" file select "<B>BIN Template</B>" from "<B>File</B>" -> "<B>New</B>" menu). <BR>
+      <BR>
+      To write "<B>.bin</B>" file to virtual floppy, select <B>"Write .bin file
+      to floppy..."</B> from <B>"Virtual drive"</B> menu of emulator, you should write it anywhere but the boot sector (which is Cylinder: <B>0</B>, Head: <B>0</B>, Sector: <B>1</B>).
+
+      <BR>
+      <BR>
+
+      <IMG SRC="img/write_bin_menu.png">
+
+      <BR>
+      <BR>
+
+      <IMG SRC="img/write_bin.gif" WIDTH=366 HEIGHT=239>
+
+      <BR>
+      <BR>
+
+      You can use this utility to write "<B>.boot</B>" files to Virtual Floppy Disk ("<B>FLOPPY_0</B>" file), instead of "<B>Write 512 bytes at 7C00h to Boot Sector</B>" menu. However, you should remember that
+      "<B>.boot</B>" file should always be written to Cylinder: <B>0</B>, Head: <B>0</B>, Sector: <B>1</B><BR>
+      <BR>
+      <TABLE BORDER=1 CELLPADDING=8>
+        <TR>
+          <TD> Boot Sector Location:<BR>
+            <BLOCKQUOTE> <FONT FACE="Fixedsys"> Cylinder: 0<br>
+              Head: 0<br>
+              Sector: 1<BR>
+              </FONT> </BLOCKQUOTE>
+            </TD>
+        </TR>
+      </TABLE>
+
+
+
+
+
+
+
+      <BR>
+
+      <HR>
+      <BR>
+
+      If you are curious, you may copy the virtual floppy ("<B>FLOPPY_0</B>" file) to a real floppy disk and boot your computer from it,
+
+      I recommend using "<A HREF="http://uranus.it.swin.edu.au/~jn/linux/rawwrite.htm" TARGET="_blank"><B>RawWrite for Windows</B></A>" you can download this little utility from <A HREF="http://www.emu8086.com/assembly_language_tutorial_assembler_reference/other/rawwritewin-0.7.zip" TARGET="_blank"><B><U>here</U></B></A> (210k).
+
+      <br><br>
+
+
+      <b>Note:</b> this <b>.boot</b> file is <b><i>not</i></b> an
+      MS-DOS compatible boot sector (it will not allow you to read or write data
+      on this diskette until you re-format it), therefore make sure the diskette you use doesn't contain any
+      important information.<BR>
+      <BR>
+      <HR>
+
+
+
+
+
+
+      </FONT>
+
+
+
+
+      <p><FONT FACE="Verdana" SIZE=3>
+
+
+        <BR>
+        Idealized floppy drive and diskette structure: <BR>
+        <BR>
+        <IMG SRC="img/floppy.gif" WIDTH=367 HEIGHT=374> <BR>
+        </FONT></p>
+      <p><FONT FACE="Verdana" SIZE=3>For a <b>1440 kb</b> diskette:<BR>
+        </FONT></p>
+      <FONT FACE="Verdana" SIZE=3><UL>
+        <LI>Floppy disk has 2 sides, and there are 2 heads; one for each side
+          (<B>0..1</B>), the drive heads move above the surface of the disk on
+          each side.<BR>
+          <BR>
+        </LI>
+        <LI>Each side has 80 cylinders (numbered <B>0..79</B>).<BR>
+          <BR>
+        </LI>
+        <LI>Each cylinder has 18 sectors (<B>1..18</B>).<BR>
+          <BR>
+        </LI>
+        <LI>Each sector has <B>512</B> bytes.<BR>
+          <BR>
+        </LI>
+        <LI>Total size of floppy disk is: 2 x 80 x 18 x 512 = <B>1,474,560</B> bytes.<BR>
+          <BR>
+        </LI>
+      </UL>
+      To read sectors from floppy drive use <A HREF="8086_and_dos_interrupts.html#int13h_02h" TARGET="_blank"><B>INT
+      13h / AH = 02h</B></A>. <BR>
+      <BR>
+      <BR>
+      <HR>
+      <CENTER>
+        <A HREF="asm_tutorial_10.html"><B> &lt;&lt;&lt; Previous Part &lt;&lt;&lt;
+        </B></A> &nbsp;&nbsp;&nbsp;&nbsp; <A HREF="asm_tutorial_12.html"><B> >>>
+        Next Part >>> </B></A>
+      </CENTER>
+      <HR>
+      <BR>
+      </FONT>
+
+
+
+
+
+
+</BODY>
+
+</HTML>

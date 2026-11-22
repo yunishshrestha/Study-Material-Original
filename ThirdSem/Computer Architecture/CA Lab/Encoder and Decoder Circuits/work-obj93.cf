@@ -1,0 +1,13 @@
+v 4
+file . "de_tb.vhdl" "2010901fad80ef7cef81ddc0caf90f585029fb68" "20260106160755.965":
+  entity de_tb at 1( 0) + 0 on 17;
+  architecture test of de_tb at 7( 78) + 0 on 18;
+file . "en_tb.vhdl" "d8b6279140f453f1798dda9d8dfd56b8c20ec5e9" "20260106155022.777":
+  entity en_tb at 1( 0) + 0 on 13;
+  architecture test of en_tb at 7( 78) + 0 on 14;
+file . "en.vhdl" "48a0e3aebc837def358b4551e9821391cdab70c6" "20260106155022.753":
+  entity en at 1( 0) + 0 on 11;
+  architecture behave of en at 11( 169) + 0 on 12;
+file . "de.vhdl" "0b589072cee81e815073f9764e466662a6a7a69f" "20260106160755.948":
+  entity de at 1( 0) + 0 on 15;
+  architecture behave of de at 11( 169) + 0 on 16;
