@@ -1,7 +1,0 @@
-#make_boot#
-
-ORG 7C00h
-
-
-      ; add your code here
-
