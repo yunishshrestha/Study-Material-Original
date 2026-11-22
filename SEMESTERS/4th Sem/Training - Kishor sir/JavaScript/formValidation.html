@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form onsubmit="return formValidation()">
+        <label for="username">Username</label>
+        <input type="text" id="username">
+        <span id="username_msg"></span>
+
+        <button type="submit">Submit</button>
+    </form>
+    <form onsubmit="return formValidation()">
+        <label for="email">Email</label>
+        <input type="email" id="email">
+        <span id="email_msg"></span>
+        <button type="submit">Submit</button>
+    </form>
+    <form onsubmit="return formValidation()">
+        <label for="password">Password</label>
+        <input type="password" id="password">
+        <span id="password_msg"></span>
+
+        <button type="submit">Submit</button>
+    </form>
+    <script>
+        let usernameInput = document.getElementById("username")
+        let usernameMsg = document.getElementById("username_msg")
+
+        function usernameValidation() {
+            let username = usernameInput.value
+            if (!username.match(/^[a-z0-9_]+$/)) {
+                usernameMsg.innerHTML = "Only lowercase alphabets, numbers, and underscores are allowed."
+                usernameMsg.style.color = "red"
+                return false
+            } else if (!username.match(/^.{3,}$/)) {
+                usernameMsg.innerHTML = "Username must be at least 3 characters long."
+                usernameMsg.style.color = "red"
+                return false
+            } else {
+                usernameMsg.innerHTML = "Valid username."
+                usernameMsg.style.color = "green"
+                return true
+            }
+        }
+        usernameInput.addEventListener("keyup", usernameValidation)
+
+        function formValidation() {
+             if (usernameValidation()) {
+                 return true } 
+            else if (emailValidation()) {
+                 return true 
+                } 
+            else if (passwordValidation()) {
+                 return true 
+                }
+            else { 
+                return false 
+            } 
+        }
+
+        let emailInput = document.getElementById("email")
+        let emailMsg = document.getElementById("email_msg")
+
+        function emailValidation() {
+            let email = emailInput.value
+            if (!email.match(/^[a-z0-9]+@[a-z0-9]+\.com$/)) {
+                emailMsg.innerHTML = "Please enter a valid email address."
+                emailMsg.style.color = "red"
+                return false
+            } else {
+                emailMsg.innerHTML = "Valid email."
+                emailMsg.style.color = "green"
+                return true
+            }
+        }
+        emailInput.addEventListener("keyup", emailValidation)
+
+        let passwordInput = document.getElementById("password")
+        let passwordMsg = document.getElementById("password_msg")
+
+        function passwordValidation() {
+            let password = passwordInput.value
+            if (!password.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)) {
+                passwordMsg.innerHTML = "Password must be at least 8 characters long and contain at least one letter and one number."
+                passwordMsg.style.color = "red"
+                return false
+            } else {
+                passwordMsg.innerHTML = "Valid password."
+                passwordMsg.style.color = "green"
+                return true
+            }
+        }
+        passwordInput.addEventListener("keyup", passwordValidation)
+
+    </script>
+</body>
+
+</html>

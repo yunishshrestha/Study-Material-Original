@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Asynchronous Javascript</title>
+  </head>
+  <body>
+    <script>
+            let fruits = ["apple", "orange", "mango"];
+
+            function addFruit(newFruit) {
+              fruits.push(newFruit);
+            }
+
+            function display() {
+              document.write("<br>Fruits: ", fruits);
+            }
+
+            //   display();
+            //   addFruit("papaya");
+            //   display();
+            //   addFruit("pear");
+            //   display();
+
+            function addFruitAsync(newFruit) {
+              setTimeout(() => {
+                fruits.push(newFruit);
+              }, 2000);
+              fruits.push(newFruit);
+            }
+
+            function displayAsync() {
+              setTimeout(() => {
+                document.write("<br>Fruits: ", fruits);
+              }, 3000);
+            }
+
+            //   displayAsync();
+            //   addFruitAsync("papaya");
+            //   displayAsync();
+            //   addFruitAsync("pear");
+            //   displayAsync();
+
+            // 1. callback
+            function addFruitCallback(newFruit, callback) {
+              setTimeout(() => {
+                fruits.push(newFruit);
+                document.write("<br>Fruits added successfully");
+                callback();
+              }, 3000);
+            }
+          //   displayAsync();
+          //   addFruitCallback("pear", displayAsync);
+
+            // 2. promise - .then .catch
+            function addFruitPromise(newFruit) {
+              return new Promise((resolve, reject) => {
+                let error = true;
+                setTimeout(() => {
+                  if (!error) {
+                    fruits.push(newFruit);
+                    resolve();
+                  } else {
+                    reject("Something went wrong");
+                  }
+                }, 2000);
+              });
+            }
+
+            //   addFruitPromise("pear")
+            //         .then(displayAsync)
+            //         .catch(() => {
+            //              document.write("<br>Something went wrong");
+            //         });
+
+            // 3. async - await
+            async function demoFunction() {
+              try{
+                    await addFruitPromise("grapes");
+                    displayAsync();
+              }
+              catch(error){
+                    document.write(error)
+              }
+
+            }
+            demoFunction();
+    </script>
+  </body>
+</html>

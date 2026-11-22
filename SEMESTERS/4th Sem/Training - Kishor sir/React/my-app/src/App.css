@@ -1,0 +1,29 @@
+h1{
+  background-color: yellow;
+}
+.bg-light{
+  background-color: #aaaaaa;
+  color: #222222;
+}
+.bg-dark{
+  background-color: #222222;
+  color: #aaaaaa;
+}
+.nav-link-dark, .navbar-brand-dark{
+  color: #fff !important;
+}
+.nav-link-light, .navbar-brand-light{
+  color: #222 !important;
+}
+
+/* Header-specific theme styles */
+.header-dark{
+  background-color: #111 !important;
+}
+.header-light{
+  background-color: #f8f9fa !important;
+}
+.navbar-brand-dark{ color: #fff !important }
+.navbar-brand-light{ color: #222 !important }
+.nav-link-dark{ color: #ddd !important }
+.nav-link-light{ color: #222 !important }

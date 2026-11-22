@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let today= new Date('2025','11','32','20','59')
+        document.write("<br>Date: ",today)
+        document.write("<br>Year: ", today.getFullYear())
+
+        let months=["Jan","Feb","Mar","Apr","may","jun","july","aug","sept","oct","nov","dec"]
+
+        document.write("<br>Month: ",today.getMonth())
+        document.write("<br>Month: ",months[today.getMonth()])
+        document.write("<br>Date: ",today.getDate())
+
+        let days=["sun","mon","tue","wed","thu","fri","sat"]
+
+        document.write("<br>Day: ",today.getDay())
+        document.write("<br>Day: ",months[today.getDay()])
+        
+        document.write("<br>Hours: ",today.getHours())
+
+
+        document.write("<br>Minutes: ",today.getMinutes())
+        document.write("<br>seconds: ",today.getSeconds())
+        document.write("<br>millisecond: ",today.getMilliseconds())
+        
+        document.write("<br> Date: ", today.toDateString())
+        document.write("<br> Time: ", today.toTimeString())
+        document.write("<br> Date: ", today.toLocaleDateString())
+        document.write("<br> Time: ", today.toLocaleTimeString())
+
+        document.write("<br>", Date.now())
+
+    </script>
+</body>
+</html>

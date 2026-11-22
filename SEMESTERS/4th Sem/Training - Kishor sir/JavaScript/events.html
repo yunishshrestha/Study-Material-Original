@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+
+
+    <button id="btn1">
+      Show Time
+    </button>
+    <!-- mouse events - click- mouseenter, mouseleave, mouseout -->
+
+
+
+    <input type="text" id="msg" onkeydown="writeNow()" onchange="writeNow()" onfocus="showTime()" onblur="changeColor()" />
+    <!-- input events - focus, blur, change -->
+    <!-- keyboard events - keypressed, keydown, keyup -->
+
+    <!-- form event - submit(default)-->
+     <form action="" onsubmit="" >
+        <button>Submit</button>
+     </form>
+
+
+    <h1 id="time"></h1>
+
+
+    <script>
+      function showTime() {
+        let today = new Date();
+        document.getElementById("time").innerHTML = today.toLocaleDateString();
+      }
+
+      function changeColor() {
+        document.getElementById("time").style.color = "blue";
+      }
+
+      function writeNow() {
+        document.getElementById("time").innerHTML =
+          document.getElementById("msg").value;
+      }
+
+      let btn = document.getElementById("btn1")
+      btn.addEventListener('click',showTime)
+    //   btn.addEventListener('mouseleave',changeColor)
+      btn.addEventListener('mouseleave',changeColor)
+    </script>
+  </body>
+</html>

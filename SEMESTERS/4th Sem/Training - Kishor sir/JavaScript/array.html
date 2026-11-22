@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 
+     array is the collection of data types
+    -->
+    <script>
+        let arr = [1, 2, 3, 'a', 'b', true, null, undefined, [9, 3, 1], { name: "Ram" }]
+        document.write("Array: ", arr)
+        //length - number iof members in the array
+        document.write("<br>Length: ", arr.length)
+        //index -> to access indiviual member
+        document.write("<br>First Member: ", arr[0])
+        document.write("<br>Last Member: ", arr[9].name)
+
+        let fruits = ['apple', 'orange', 'banana']
+        fruits.push('papaya')
+        document.write('<br>Push: ', fruits)
+        //array.unshift(new member)->
+        fruits.unshift('pear')
+        document.write('<br>Unshift: ', fruits)
+        //array.pop
+        let removed = fruits.pop()
+        document.write("<br>POP: ", fruits)
+        document.write("<br>Removed Member: ", removed)
+        //array.shift() - > 
+        removed = fruits.shift()
+        document.write("<br>SHIFT: ", fruits)
+        document.write("<br>Removed Member: ", removed)
+        //array.splice(index,number,new member)
+        //index - where to add/remove
+        //number - no. of members to remove
+        //new member - list of new members to add
+        
+        fruits.splice(1, 0, 'pear','papaya', 'strawberry')
+        document.write("<br>Splice: ", fruits)
+        document.write("<br>Removed Member: ", removed)
+        
+        //reverse()
+        document.write("<br>Original: ",fruits)
+        fruits.reverse()
+        document.write("<br>Reversed: ",fruits)
+        
+        //sort()
+        fruits.sort()
+        document.write("<br>Sorted: ",fruits)
+        
+        let new_fruits = fruits.toSpliced(2,2,'grapes','watermelon')
+        document.write("<br>Original: ",fruits)
+        document.write("<br>New Fruits: ",new_fruits)
+        
+        fruits.push('grapes','watermelon')
+        document.write("<br>Original: ",fruits)
+        new_fruits = fruits.toSorted()
+        document.write("<br>New Fruits: ",new_fruits)
+        
+        new_fruits = fruits.toReversed()
+        document.write("<br>New Fruits: ",new_fruits)
+        
+        //slice
+        new_fruits = fruits.slice(2,5)
+        document.write("<br>Original: ",fruits)
+        document.write("<br>New Fruits: ",new_fruits)
+        
+        new_fruits = fruits.slice(-4,-1)
+        document.write("<br>Original: ",fruits)
+        document.write("<br>New Fruits: ",new_fruits)
+        
+        
+        new_fruits = fruits.slice(4)
+        document.write("<br>Original: ",fruits)
+        document.write("<br>New Fruits: ",new_fruits)
+
+        // let search = fruits.indexOf('apple')
+        // document.write("<br>Index of apple: ", search)
+        
+        fruits.push('apple')
+        let search = fruits.indexOf('apple')
+        document.write("<br>Index of apple: ", search)
+
+        search = fruits.indexOf('apple',search+1)
+        document.write("<br>Index of apple: ", search)
+        
+        
+        search = fruits.lastIndexOf('apple')
+        document.write("<br>Index of apple: ", search)
+
+        
+        //array methods
+        for(i=0;i<fruits.length;i++){
+            document.write("<li>",fruits[i],"</li>")
+        }
+
+
+        //for in loop
+        for(var key in fruits){
+            document.write("<li>",fruits[key],"</li>")
+        }
+        
+        //for of loop
+        for(var member of fruits){
+            document.write("<li>",member,"</li>")
+        }
+        
+        //forEach(()=>{})
+        fruits.forEach((member)=>{
+            document.write("<h3><br>",member,"</h3")
+        })
+        
+        fruits.forEach((member,i)=>{
+            document.write("<h3><br>",i+1,". ",member,"</h3")
+        })
+        //map
+        fruits.map((member,i)=>{
+            document.write("<h3><br>",i+1,". ",member,"<br></h3")
+            })
+            
+            // 
+            let test = fruits.forEach((member,i)=>{
+                document.write("<h3><br>",i+1,". ",member,"</h3")
+                    return member.toUpperCase()
+                })
+                
+                
+               let test1 = fruits.map((member,i)=>{
+                    document.write("<h3><br>",i+1,". ",member,"<br></h3")
+                        return member.toUpperCase()
+                    })
+
+            </script>
+</body>
+
+</html>

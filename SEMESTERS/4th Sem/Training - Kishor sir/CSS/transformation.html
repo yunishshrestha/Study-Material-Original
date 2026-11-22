@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            transition: all 2s;
+        }
+            .demo
+            {
+                height: 300px;
+                width: 300px;
+                background-color: blue;
+            }
+            .demo:hover{
+                background-color: red;
+                /* border-radius: 50%; */
+                /* transform: translate(50px,50px); */
+                /* transform: translateX(50px,50px);
+                transform: translateY(50px,50px); */
+                /* transform: rotate(360deg);
+                transform: rotateX(180deg);
+                transform: rotateY(180deg);
+                transform: rotateZ(180deg) translate(-100px,-100px)  scale(0.5); */
+                /* transform: scale(1.2,0.5);
+                /* transform: skew(20deg,-20deg); */
+                /* transform: skewX(20deg,-20deg);  */
+                /* transform: skewY(20deg,-20deg);
+                transform: rotate(100deg); */
+                transform: rotateX(180deg);
+                transform-origin: 100% 100%;
+            }
+            body
+            {
+                perspective: 100px;
+            }
+    </style>
+</head>
+<body>
+    <!-- transformation - change in shape, size , location,orientation
+    1.translatuin- change in location
+    2 rotate - change in orientation
+    3.scale- change in size
+    >1-enlarge
+    <1 reduce
+    4.skew- change in shape
+    -->
+    <div class="demo">Hello World</div>
+    
+    
+</body>
+</html>

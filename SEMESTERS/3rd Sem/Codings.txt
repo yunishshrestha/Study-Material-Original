@@ -1,0 +1,1002 @@
+1. Bisection Method
+#include<stdio.h>
+#include<math.h>
+
+#define f(x) (cos(x) - x * exp(x))
+
+int main()
+{
+    float x0, x1, x2, f0, f1, f2, e;
+
+up:
+    printf("Enter two initial guesses:\n");
+    scanf("%f%f", &x0, &x1);
+
+    printf("Enter tolerable error:\n");
+    scanf("%f", &e);
+
+    f0 = f(x0);
+    f1 = f(x1);
+
+    if(f0 * f1 > 0.0)
+    {
+        printf("Incorrect Initial Guesses\n");
+        goto up;
+    }
+
+    do
+    {
+        x2 = (x0 + x1)/2;
+        f2 = f(x2);
+
+        if(f0 * f2 < 0)
+        {
+            x1 = x2;
+            f1 = f2;
+        }
+        else
+        {
+            x0 = x2;
+            f0 = f2;
+        }
+
+    } while(fabs(f2) > e);
+
+    printf("Root = %f", x2);
+    return 0;
+}
+
+
+False Position Method
+#include <stdio.h>
+#include <math.h>
+
+double f(double x)
+{
+    return pow(x, 3) - x - 1;
+}
+
+double false_position(double a, double b, double tol)
+{
+    double fa = f(a);
+    double fb = f(b);
+    double c, fc;
+
+    do
+    {
+        c = (a*fb - b*fa)/(fb - fa);
+        fc = f(c);
+
+        if (fc * fa > 0)
+        {
+            a = c;
+            fa = fc;
+        }
+        else
+        {
+            b = c;
+            fb = fc;
+        }
+
+    } while (fabs(fc) > tol);
+
+    return c;
+}
+
+int main()
+{
+    double x, y;
+
+    printf("Enter initial guesses:\n");
+    scanf("%lf%lf", &x, &y);
+
+    if (f(x)*f(y) < 0)
+    {
+        double root = false_position(x, y, 0.0001);
+        printf("Root = %f\n", root);
+    }
+    else
+    {
+        printf("Wrong guess\n");
+    }
+
+    return 0;
+}
+
+
+ Fixed Point Iteration
+#include <stdio.h>
+#include <math.h>
+
+double f(double x)
+{
+    return exp(-x) - x;
+}
+
+double g(double x)
+{
+    return exp(-x);
+}
+
+int main()
+{
+    double x0, x, e;
+    int i, n;
+
+    printf("Enter initial guess, error, iterations:\n");
+    scanf("%lf %lf %d", &x0, &e, &n);
+
+    for(i = 1; i <= n; i++)
+    {
+        x = g(x0);
+
+        if(fabs(x - x0) < e)
+        {
+            printf("Root = %lf", x);
+            return 0;
+        }
+
+        x0 = x;
+    }
+
+    printf("Not converged");
+    return 0;
+}
+
+
+Newton Rhapson
+#include <stdio.h>
+#include <math.h>
+
+#define EPSILON 0.000001
+
+double f(double x)
+{
+    return x * log10(x) - 1.2;
+}
+
+double f_prime(double x)
+{
+    return 0.43429 + log10(x);
+}
+
+int main()
+{
+    double x;
+
+    printf("Enter initial guess: ");
+    scanf("%lf", &x);
+
+    while(fabs(f(x)) > EPSILON)
+    {
+        x = x - f(x)/f_prime(x);
+    }
+
+    printf("Root = %lf", x);
+    return 0;
+}
+
+
+Gauss Elimination (Partial Pivoting)
+#include <stdio.h>
+#include <math.h>
+
+#define N 3
+
+int main()
+{
+    float A[N][N+1], temp, ratio;
+    int i,j,k,max_row;
+
+    for(i=0;i<N;i++)
+        for(j=0;j<=N;j++)
+            scanf("%f",&A[i][j]);
+
+    for(i=0;i<N;i++)
+    {
+        max_row=i;
+        for(j=i+1;j<N;j++)
+            if(fabs(A[j][i])>fabs(A[max_row][i]))
+                max_row=j;
+
+        for(k=0;k<=N;k++)
+        {
+            temp=A[i][k];
+            A[i][k]=A[max_row][k];
+            A[max_row][k]=temp;
+        }
+
+        for(j=i+1;j<N;j++)
+        {
+            ratio=A[j][i]/A[i][i];
+            for(k=i;k<=N;k++)
+                A[j][k]-=ratio*A[i][k];
+        }
+    }
+
+    float x[N];
+    for(i=N-1;i>=0;i--)
+    {
+        x[i]=A[i][N];
+        for(j=i+1;j<N;j++)
+            x[i]-=A[i][j]*x[j];
+        x[i]/=A[i][i];
+    }
+
+    for(i=0;i<N;i++)
+        printf("x%d=%f\n",i+1,x[i]);
+
+    return 0;
+}
+
+
+Gauss Elimination (Complete Pivoting)
+#include <stdio.h>
+#include <math.h>
+
+#define N 3
+
+int main()
+{
+    float A[N][N+1], temp, ratio;
+    int i,j,k,max_row,max_col;
+    float max;
+
+    for(i=0;i<N;i++)
+        for(j=0;j<=N;j++)
+            scanf("%f",&A[i][j]);
+
+    for(k=0;k<N-1;k++)
+    {
+        max=0;
+        for(i=k;i<N;i++)
+            for(j=k;j<N;j++)
+                if(fabs(A[i][j])>max)
+                {
+                    max=fabs(A[i][j]);
+                    max_row=i;
+                    max_col=j;
+                }
+
+        for(j=0;j<=N;j++)
+        {
+            temp=A[k][j];
+            A[k][j]=A[max_row][j];
+            A[max_row][j]=temp;
+        }
+
+        for(i=0;i<N;i++)
+        {
+            temp=A[i][k];
+            A[i][k]=A[i][max_col];
+            A[i][max_col]=temp;
+        }
+
+        for(i=k+1;i<N;i++)
+        {
+            ratio=A[i][k]/A[k][k];
+            for(j=k;j<=N;j++)
+                A[i][j]-=ratio*A[k][j];
+        }
+    }
+
+    float x[N];
+    for(i=N-1;i>=0;i--)
+    {
+        x[i]=A[i][N];
+        for(j=i+1;j<N;j++)
+            x[i]-=A[i][j]*x[j];
+        x[i]/=A[i][i];
+    }
+
+    for(i=0;i<N;i++)
+        printf("x%d=%f\n",i+1,x[i]);
+
+    return 0;
+}
+
+
+Gauss Jacobi
+#include<stdio.h>
+#include<math.h>
+
+#define f1(x,y,z)  (17-y+2*z)/20
+#define f2(x,y,z)  (-18-3*x+z)/20
+#define f3(x,y,z)  (25-2*x+3*y)/20
+
+int main()
+{
+ float x0=0, y0=0, z0=0, x1, y1, z1, e;
+
+ printf("Enter error:\n");
+ scanf("%f", &e);
+
+ do
+ {
+  x1 = f1(x0,y0,z0);
+  y1 = f2(x0,y0,z0);
+  z1 = f3(x0,y0,z0);
+
+  if(fabs(x0-x1)<e && fabs(y0-y1)<e && fabs(z0-z1)<e)
+      break;
+
+  x0 = x1;
+  y0 = y1;
+  z0 = z1;
+
+ }while(1);
+
+ printf("Solution: %f %f %f",x1,y1,z1);
+ return 0;
+}
+
+
+Gauss Seidel
+#include<stdio.h>
+#include<math.h>
+
+#define f1(x,y,z)  (17-y+2*z)/20
+#define f2(x,y,z)  (-18-3*x+z)/20
+#define f3(x,y,z)  (25-2*x+3*y)/20
+
+int main()
+{
+ float x0=0, y0=0, z0=0, x1, y1, z1, e;
+
+ printf("Enter error:\n");
+ scanf("%f", &e);
+
+ do
+ {
+  x1 = f1(x0,y0,z0);
+  y1 = f2(x1,y0,z0);
+  z1 = f3(x1,y1,z0);
+
+  if(fabs(x0-x1)<e && fabs(y0-y1)<e && fabs(z0-z1)<e)
+      break;
+
+  x0 = x1;
+  y0 = y1;
+  z0 = z1;
+
+ }while(1);
+
+ printf("Solution: %f %f %f",x1,y1,z1);
+ return 0;
+}
+
+
+
+Gauss Elimination (Normal)
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int i, j, k, n;
+    printf("Enter the number of equations: ");
+    scanf("%d", &n);
+
+    double a[n][n+1], factor;
+
+    printf("Enter the augmented matrix:\n");
+    for (i = 0; i < n; i++)
+        for (j = 0; j <= n; j++)
+            scanf("%lf", &a[i][j]);
+
+    // Forward elimination
+    for (k = 0; k < n-1; k++) {
+        for (i = k+1; i < n; i++) {
+            factor = a[i][k] / a[k][k];
+            for (j = k; j <= n; j++) {
+                a[i][j] -= factor * a[k][j];
+            }
+        }
+    }
+
+    // Back substitution
+    double x[n];
+    for (i = n-1; i >= 0; i--) {
+        x[i] = a[i][n];
+        for (j = i+1; j < n; j++)
+            x[i] -= a[i][j] * x[j];
+        x[i] /= a[i][i];
+    }
+
+    printf("Solution:\n");
+    for (i = 0; i < n; i++)
+        printf("x[%d] = %lf\n", i, x[i]);
+
+    return 0;
+}
+
+
+
+
+4. Linear Curve Fitting (y = a + bx)
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+void linear_fit(double x[], double y[], int n, double *a, double *b) {
+    double sum_x = 0, sum_y = 0, sum_xy = 0, sum_xx = 0;
+    int i;
+
+    for (i = 0; i < n; i++) {
+        sum_x += x[i];
+        sum_y += y[i];
+        sum_xy += x[i] * y[i];
+        sum_xx += x[i] * x[i];
+    }
+
+    double delta = n * sum_xx - sum_x * sum_x;
+    if (delta == 0) {
+        printf("Cannot fit a line\n");
+        exit(1);
+    }
+
+    *a = (n * sum_xy - sum_x * sum_y) / delta;
+    *b = (sum_y - (*a) * sum_x) / n;
+}
+
+int main() {
+    int n;
+    printf("Enter the number of data points: ");
+    scanf("%d", &n);
+
+    double x[n], y[n];
+    for (int i = 0; i < n; i++) {
+        printf("Enter x[%d] and y[%d]: ", i, i);
+        scanf("%lf %lf", &x[i], &y[i]);
+    }
+
+    double a, b;
+    linear_fit(x, y, n, &a, &b);
+    printf("a = %f, b = %f\n", a, b);
+    printf("The best curve fit is y = %f + %f x\n", a, b);
+
+    return 0;
+}
+
+
+5. Trapezoidal Rule
+#include <stdio.h>
+#include <math.h>
+
+double function(double x) {
+    return 4 * exp(x) / (1 + pow(x, 3)); // Replace with your function
+}
+
+double trapezoidalRule(double a, double b, int n) {
+    double h = (b - a) / n;
+    double sum = (function(a) + function(b)) / 2.0;
+
+    for (int i = 1; i < n; i++) {
+        double x = a + i * h;
+        sum += function(x);
+    }
+
+    return h * sum;
+}
+
+int main() {
+    double a, b;
+    int n;
+    printf("Enter lower limit a, upper limit b and number of subintervals n: ");
+    scanf("%lf %lf %d", &a, &b, &n);
+
+    double result = trapezoidalRule(a, b, n);
+    printf("Numerical integration result: %lf\n", result);
+
+    return 0;
+}
+
+
+6. Simpson 1/3 Rule
+#include <stdio.h>
+#include <math.h>
+
+double function(double x) {
+    return cos(x); // Replace with your function
+}
+
+double simpsonsRule(double a, double b, int n) {
+    if (n % 2 != 0) {
+        printf("Number of subintervals must be even.\n");
+        return 0;
+    }
+
+    double h = (b - a) / n;
+    double sum = function(a) + function(b);
+
+    for (int i = 1; i < n; i++) {
+        double x = a + i * h;
+        sum += (i % 2 == 0) ? 2 * function(x) : 4 * function(x);
+    }
+
+    return (h / 3.0) * sum;
+}
+
+int main() {
+    double a, b;
+    int n;
+    printf("Enter lower limit a, upper limit b and even number of subintervals n: ");
+    scanf("%lf %lf %d", &a, &b, &n);
+
+    double result = simpsonsRule(a, b, n);
+    printf("Numerical integration result: %lf\n", result);
+
+    return 0;
+}
+
+SIMPSONS 3/8
+#include <stdio.h>
+#include <math.h>
+
+double function(double x) {
+    return cos(x);
+}
+
+double simpson38(double a, double b, int n) {
+    if (n % 3 != 0) {
+        printf("n must be multiple of 3\n");
+        return 0;
+    }
+
+    double h = (b - a) / n;
+    double sum = function(a) + function(b);
+
+    for (int i = 1; i < n; i++) {
+        double x = a + i * h;
+        if (i % 3 == 0)
+            sum += 2 * function(x);
+        else
+            sum += 3 * function(x);
+    }
+
+    return (3 * h / 8) * sum;
+}
+
+int main() {
+    double a, b;
+    int n;
+
+    printf("Enter a, b and n (multiple of 3): ");
+    scanf("%lf %lf %d", &a, &b, &n);
+
+    double result = simpson38(a, b, n);
+    printf("Result = %lf\n", result);
+
+    return 0;
+}
+
+
+
+7. Gaussian Integration (2 and 3 points)
+#include <stdio.h>
+
+double f(double x) {
+    return x * x; // Replace with your function
+}
+
+double gaussian_integration(double a, double b, int n) {
+    double result = 0.0;
+
+    if (n == 2) {
+        double w[2] = {1.0, 1.0};
+        double x[2] = {-0.5773502692, 0.5773502692};
+
+        for (int i = 0; i < 2; i++) {
+            double t = ((b - a) / 2.0) * x[i] + ((b + a) / 2.0);
+            result += w[i] * f(t);
+        }
+    } else if (n == 3) {
+        double w[3] = {0.5555555556, 0.8888888889, 0.5555555556};
+        double x[3] = {-0.7745966692, 0.0, 0.7745966692};
+
+        for (int i = 0; i < 3; i++) {
+            double t = ((b - a) / 2.0) * x[i] + ((b + a) / 2.0);
+            result += w[i] * f(t);
+        }
+    }
+
+    return result * (b - a) / 2.0;
+}
+
+int main() {
+    double a, b;
+    printf("Enter lower limit a and upper limit b: ");
+    scanf("%lf %lf", &a, &b);
+
+    printf("2-point Gaussian Integration: %.6f\n", gaussian_integration(a, b, 2));
+    printf("3-point Gaussian Integration: %.6f\n", gaussian_integration(a, b, 3));
+
+    return 0;
+}
+
+9. Euler Method
+#include <stdio.h>
+
+double f(double x, double y) {
+    return x + y; // Example ODE dy/dx = x + y
+}
+
+void eulerMethod(double x0, double y0, double h, double xn) {
+    double x = x0, y = y0;
+
+    printf("x\t\t y\n");
+    while (x <= xn) {
+        printf("%lf\t %lf\n", x, y);
+        double slope = f(x, y);
+        y = y + h * slope;
+        x = x + h;
+    }
+}
+
+int main() {
+    double x0 = 0.0, y0 = 1.0, h = 0.1, xn = 1.0;
+    eulerMethod(x0, y0, h, xn);
+    return 0;
+}
+
+10. Modified Euler Method
+#include <stdio.h>
+
+double f(double x, double y) {
+    return x + y;
+}
+
+void modifiedEulerMethod(double x0, double y0, double h, double xn) {
+    double x = x0, y = y0;
+
+    printf("x\t\t y\n");
+    while (x <= xn) {
+        printf("%lf\t %lf\n", x, y);
+        double slope1 = f(x, y);
+        double slope2 = f(x + h, y + h * slope1);
+        y = y + (h / 2.0) * (slope1 + slope2);
+        x = x + h;
+    }
+}
+
+int main() {
+    double x0 = 0.0, y0 = 1.0, h = 0.1, xn = 1.0;
+    modifiedEulerMethod(x0, y0, h, xn);
+    return 0;
+}
+
+
+11. RK4 Method
+#include <stdio.h>
+
+double f(double x, double y) {
+    return x + y;
+}
+
+void rk4Method(double x0, double y0, double h, double xn) {
+    double x = x0, y = y0;
+
+    printf("x\t\t y\n");
+    while (x <= xn) {
+        printf("%lf\t %lf\n", x, y);
+        double k1 = h * f(x, y);
+        double k2 = h * f(x + h/2.0, y + k1/2.0);
+        double k3 = h * f(x + h/2.0, y + k2/2.0);
+        double k4 = h * f(x + h, y + k3);
+        y = y + (k1 + 2.0*k2 + 2.0*k3 + k4) / 6.0;
+        x = x + h;
+    }
+}
+
+int main() {
+    double x0 = 0.0, y0 = 1.0, h = 0.1, xn = 1.0;
+    rk4Method(x0, y0, h, xn);
+    return 0;
+}
+
+
+Taylor Series
+#include <stdio.h>
+#include <math.h>
+
+// First derivative
+double f1(double x, double y) { return x + y; }
+// Second derivative
+
+double f2(double x, double y) { 
+    return 1 + x + y; 
+}
+// Third derivative
+double f3(double x, double y) { 
+    return 1 + x + y;
+ }
+// Fourth derivative
+double f4(double x, double y) {
+     return 1 + x + y;
+     }
+
+int main()
+{
+    double x0 = 1, y0 = 0;  // initial condition y(1) = 0
+    double xn = 1.2;        // final point
+    int n = 5;              // number of steps
+
+    double h = (xn - x0)/n; // automatically calculate step size
+
+    double x = x0;
+    double y = y0;
+
+    printf("Step\tx\t\ty_n\n");
+    printf("0\t%.2lf\t%.6lf\n", x, y); // initial step
+
+    for(int i = 1; i <= n; i++)
+    {
+        double y1 = f1(x, y);
+        double y2 = f2(x, y);
+        double y3 = f3(x, y);
+        double y4 = f4(x, y);
+
+        // Taylor series formula up to 4th derivative
+        y = y + h*y1 + (pow(h,2)/2)*y2 + (pow(h,3)/6)*y3 + (pow(h,4)/24)*y4;
+
+        x = x + h; // increment x
+
+        printf("%d\t%.2lf\t%.6lf\n", i, x, y); // print y_n at each step
+    }
+
+    return 0;
+}
+ 1. Shooting Method (Boundary Value Problem)
+#include <stdio.h>
+#include <math.h>
+
+#define m1 2.0
+#define m2 4.0
+
+double f(double x, double y) {
+    return x * y;
+}
+
+double f1(double fp) {
+    return 1 + fp;
+}
+
+double f2(double x, double y) {
+    return x * y;
+}
+
+double taylor(double x0, double y0, double xn, double fp0) {
+    double h = xn - x0;
+
+    double y = y0
+        + h * fp0
+        + pow(h, 2) * f(x0, y0) / 2.0
+        + pow(h, 3) * f1(fp0) / 6.0
+        + pow(h, 4) * f2(x0, y0) / 24.0;
+
+    return y;
+}
+
+int main() {
+    double x0, y0, xn, yn;
+
+    printf("Enter x0 and y0: ");
+    scanf("%lf %lf", &x0, &y0);
+
+    printf("Enter xn and yn: ");
+    scanf("%lf %lf", &xn, &yn);
+
+    double b1 = taylor(x0, y0, xn, m1);
+    double b2 = taylor(x0, y0, xn, m2);
+
+    double m = m2 - ((b2 - yn) / (b2 - b1)) * (m2 - m1);
+
+    printf("\nf(xn) = %lf\n", b1);
+    printf("\nf(xn) = %lf\n", b2);
+
+    printf("\nEnter xn for which y is to be found: ");
+    scanf("%lf", &xn);
+
+    double res = taylor(x0, y0, xn, m);
+
+    printf("y(%lf) = %lf\n", xn, res);
+
+    return 0;
+}
+
+
+2. Laplace Equation 
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    float u1 = 0, u2 = 0, u3 = 0, u4 = 0;
+    float old1, old2, old3, old4;
+    float top = 80, bottom = 20, left = 10, right = 40;
+    float error;
+    int i = 0;
+
+    printf("Iter\t u1\t u2\t u3\t u4\n");
+    printf("0\t %.3f\t %.3f\t %.3f\t %.3f\n", u1, u2, u3, u4);
+
+    while (1) {
+        i++;
+
+        old1 = u1;
+        old2 = u2;
+        old3 = u3;
+        old4 = u4;
+
+        u1 = (top + u3 + left + u2) / 4;
+        u2 = (top + u4 + u1 + right) / 4;
+        u3 = (u1 + bottom + left + u4) / 4;
+        u4 = (u2 + bottom + u3 + right) / 4;
+
+        printf("%d\t %.3f\t %.3f\t %.3f\t %.3f\n", i, u1, u2, u3, u4);
+
+        error = fmax(
+                    fmax(fabs(u1 - old1), fabs(u2 - old2)),
+                    fmax(fabs(u3 - old3), fabs(u4 - old4))
+                 );
+
+        if (error < 0.001)
+            break;
+    }
+
+    printf("\nConverged after %d iterations\n", i);
+
+    return 0;
+}
+
+
+3. Newton Forward Interpolation
+#include <stdio.h>
+
+int factorial(int n) {
+    int fact = 1;
+    for (int i = 1; i <= n; i++) {
+        fact *= i;
+    }
+    return fact;
+}
+
+float newtonForwardInterpolation(int n, float x[], float y[], float x0) {
+    float y0 = y[0], u = (x0 - x[0]) / (x[1] - x[0]);
+    float forward[n-1][n-1];
+
+    for (int j = 0; j < n-1; j++) {
+        for (int i = 0; i < n-j-1; i++) {
+            if (j == 0) {
+                forward[i][j] = y[i+1] - y[i];
+            } else {
+                forward[i][j] = forward[i+1][j-1] - forward[i][j-1];
+            }
+        }
+    }
+
+    printf("Forward Difference Table:\n");
+    for (int i = 0; i < n-1; i++) {
+        printf("%.4f\t", forward[i][0]);
+        for (int j = 1; j < n-i-1; j++)
+            printf("%.4f\t", forward[i][j]);
+        printf("\n");
+    }
+
+    for (int j = 1; j < n; j++) {
+        y0 += (u * forward[0][j-1]) / factorial(j);
+        u *= (x0 - x[j]) / (x[j+1] - x[j]);
+    }
+
+    return y0;
+}
+
+int main() {
+    int n;
+    printf("Enter the number of data points: ");
+    scanf("%d", &n);
+
+    float x[n], y[n];
+    for (int i = 0; i < n; i++) {
+        printf("Enter x[%d] and y[%d]: ", i, i);
+        scanf("%f %f", &x[i], &y[i]);
+    }
+
+    float x0;
+    printf("Enter the value of x for which y is to be found: ");
+    scanf("%f", &x0);
+
+    float y0 = newtonForwardInterpolation(n, x, y, x0);
+    printf("The value of y at x = %.2f is %.2f\n", x0, y0);
+
+    return 0;
+}
+
+
+
+
+
+
+13. Backward Difference
+#include <stdio.h>
+
+double x[] = {1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6};
+double y[] = {7.989, 8.403, 8.781, 9.129, 9.451, 9.750, 10.031};
+
+double backwardDifference(int index) {
+    double h = x[index] - x[index - 1];
+    return (3*y[index] - 4*y[index - 1] + y[index - 2]) / (2*h);
+}
+
+int main() {
+    int index;
+    printf("Enter index: ");
+    scanf("%d", &index);
+
+    double result = backwardDifference(index);
+    printf("Backward Difference = %.4lf\n", result);
+
+    return 0;
+}
+
+8. Forward Difference for Tabulated Data
+#include <stdio.h>
+#include <math.h>
+
+double x[] = {1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6};
+double y[] = {7.989, 8.403, 8.781, 9.129, 9.451, 9.750, 10.031};
+
+double forwardDifference(int index) {
+    double h = x[index + 1] - x[index];
+    return (-3*y[index] + 4*y[index + 1] - y[index + 2]) / (2*h);
+}
+
+int main() {
+    int index;
+    printf("Enter index at which derivative is required: ");
+    scanf("%d", &index);
+
+    double result = forwardDifference(index);
+    printf("Numerical differentiation result: %.4lf\n", result);
+
+    return 0;
+}
+
+
+Lagrange Interpolation
+#include <stdio.h>
+
+double lagrange_interp(double x[], double y[], int n, double xi) {
+    double L, P = 1, result = 0;
+    int i, j;
+
+    for (i = 0; i < n; i++) {
+        P = 1;
+        for (j = 0; j < n; j++) {
+            if (j != i) {
+                P *= (xi - x[j]) / (x[i] - x[j]);
+            }
+        }
+        L = y[i] * P;
+        result += L;
+    }
+    return result;
+}
+
+int main() {
+    int n, i;
+    double xi;
+    printf("Enter the number of data points: ");
+    scanf("%d", &n);
+
+    double x[n], y[n];
+    for (i = 0; i < n; i++) {
+        printf("Enter x[%d] and y[%d]: ", i, i);
+        scanf("%lf %lf", &x[i], &y[i]);
+    }
+
+    printf("Enter the value to interpolate: ");
+    scanf("%lf", &xi);
+
+    double result = lagrange_interp(x, y, n, xi);
+    printf("Interpolated value at %f is %f\n", xi, result);
+    return 0;
+}

@@ -1,0 +1,470 @@
+
+<HTML>
+
+<HEAD>
+
+<TITLE>8086 assembler tutorial for beginners (part 7)</TITLE>
+
+<META name="description" content="Program Flow Control - Tutorial for Beginners">
+
+<META name="keywords" content="program flow control, 8086, tutorial, programming, assembler tutorial, tutorial for begginers">
+
+
+
+</HEAD>
+
+<BODY bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#0000FF" alink="#FF0000">
+
+
+
+<FONT FACE="Verdana" SIZE=3>
+
+
+<FONT SIZE=+1>
+<B>8086 assembler tutorial for beginners (part 7)</B>
+</FONT>
+
+
+
+
+<BR><BR>
+
+<FONT SIZE=+2><B>Program Flow Control</B></FONT>
+<BR><BR>
+
+Controlling the program flow is a very important thing, this is where
+your program can make decisions according to certain conditions.
+
+<BR><BR>
+
+<UL>
+
+<LI><B>Unconditional Jumps</B><BR><BR>
+ The basic instruction that transfers control to another point in the program is <B>JMP</B>.
+ <BR><BR>
+ The basic syntax of <B>JMP</B> instruction:
+ <BLOCKQUOTE>
+ <FONT FACE="Fixedsys">
+ JMP <U>label</U>
+ </FONT>
+ </BLOCKQUOTE>
+
+ To declare a <I>label</I> in your program, just type its name and add "<B>:</B>"
+ to the end, label can be any character combination but it cannot start with
+ a number, for example here are 3 legal label definitions:
+ <BLOCKQUOTE>
+ <FONT FACE="Fixedsys">
+ label1:<BR>
+ label2:<BR>
+ a:
+ </FONT>
+ </BLOCKQUOTE>
+ Label can be declared on a separate line or before any other instruction, for example:
+ <BLOCKQUOTE>
+ <FONT FACE="Fixedsys">
+ x1:<BR>
+ MOV AX, 1<BR><BR>
+ x2: MOV AX, 2<BR>
+ </FONT>
+ </BLOCKQUOTE>
+
+ Here is an example of <B>JMP</B> instruction:<BR><BR>
+
+<TABLE BORDER=1 CELLPADDING=10 WIDTH=50%><TR><TD>
+<PRE><FONT FACE="Fixedsys">
+ORG    100h
+
+MOV    AX, 5          ; set AX to 5.
+MOV    BX, 2          ; set BX to 2.
+
+JMP    calc           ; go to 'calc'.
+
+back:  JMP stop       ; go to 'stop'.
+
+calc:
+ADD    AX, BX         ; add BX to AX.
+JMP    back           ; go 'back'.
+
+stop:
+
+RET                   ; return to operating system.
+
+END                   ; directive to stop the compiler.</FONT></PRE>
+</TD></TR></TABLE>
+
+<BR>
+
+Of course there is an easier way to calculate the some of two numbers,
+but it's still a good example of <B>JMP</B> instruction.
+
+<BR>
+As you can see from this example <B>JMP</B> is able to transfer control both
+forward and backward.
+It can jump anywhere in current code segment (65,535 bytes).
+
+<BR><BR><BR>
+
+</LI>
+
+
+<LI><B>Short Conditional Jumps</B><BR><BR>
+
+ Unlike <B>JMP</B> instruction that does an unconditional jump, there are instructions
+ that do a conditional jumps (jump only when some conditions are in act).
+ These instructions are divided in three groups, first group just test single flag, second
+ compares numbers as signed, and third compares numbers as unsigned.
+
+ <BR><BR>
+
+	<B>Jump instructions that test single flag</B>
+	<BR><BR>
+
+	<FONT FACE="Fixedsys">
+
+	<TABLE BORDER=1 CELLPADDING=7>
+	<TR>
+	<TD BGCOLOR=yellow>Instruction</TD> <TD BGCOLOR=yellow>Description</TD>
+	<TD BGCOLOR=yellow>Condition</TD>
+	<TD BGCOLOR=yellow>Opposite Instruction</TD>
+	</TR>
+
+	<TR>
+    <TD>JZ , JE</TD> <TD>Jump if Zero (Equal).</TD> <TD>&nbsp;ZF = 1</TD> <TD>JNZ, JNE</TD>
+	</TR>
+
+	<TR>
+    <TD><NOBR>JC , JB, JNAE</NOBR></TD> <TD>Jump if Carry (Below, Not Above Equal).</TD>
+    <TD>&nbsp;CF = 1</TD> <TD>JNC, JNB, JAE</TD>
+	</TR>
+
+	<TR>
+    <TD>JS</TD> <TD>Jump if Sign.</TD> <TD>&nbsp;SF = 1</TD> <TD>JNS</TD>
+	</TR>
+
+	<TR>
+    <TD>JO</TD> <TD>Jump if Overflow.</TD> <TD>&nbsp;OF = 1</TD> <TD>JNO</TD>
+	</TR>
+
+	<TR>
+    <TD>JPE, JP</TD> <TD>Jump if Parity Even.</TD> <TD>&nbsp;PF = 1</TD> <TD>JPO</TD>
+	</TR>
+
+	<TR><TD></TD></TR>
+
+	<TR>
+    <TD>JNZ , JNE</TD> <TD>Jump if Not Zero (Not Equal).</TD> <TD>&nbsp;ZF = 0</TD> <TD>JZ, JE</TD>
+	</TR>
+
+	<TR>
+    <TD><NOBR>JNC , JNB, JAE</NOBR></TD> <TD>Jump if Not Carry (Not Below, Above Equal).</TD>
+    <TD>&nbsp;CF = 0</TD> <TD>JC, JB, JNAE</TD>
+	</TR>
+
+	<TR>
+    <TD>JNS</TD> <TD>Jump if Not Sign.</TD> <TD>&nbsp;SF = 0</TD> <TD>JS</TD>
+	</TR>
+
+	<TR>
+    <TD>JNO</TD> <TD>Jump if Not Overflow.</TD> <TD>&nbsp;OF = 0</TD> <TD>JO</TD>
+	</TR>
+
+	<TR>
+    <TD>JPO, JNP</TD> <TD>Jump if Parity Odd (No Parity).</TD> <TD>&nbsp;PF = 0</TD> <TD>JPE, JP</TD>
+	</TR>
+
+	</TABLE>
+
+	</FONT>
+
+	<BR><BR>
+	As you can see there are some instructions that do that same thing, that's correct,
+	they even are assembled into the same machine code, so it's good to remember that
+	when you compile <B>JE</B> instruction - you will get it disassembled as: <B>JZ</B>.<BR>
+	Different names are used to make programs easier to understand and code.
+
+<BR><BR><BR>
+
+	<B>Jump instructions for signed numbers</B>
+	<BR><BR>
+
+	<FONT FACE="Fixedsys">
+
+	<TABLE BORDER=1 CELLPADDING=7>
+	<TR>
+	<TD BGCOLOR=yellow>Instruction</TD> <TD BGCOLOR=yellow>Description</TD>
+	<TD BGCOLOR=yellow>Condition</TD>
+	<TD BGCOLOR=yellow>Opposite Instruction</TD>
+	</TR>
+
+	<TR>
+    <TD>JE , JZ</TD> <TD>Jump if Equal (<FONT COLOR=red>=</FONT>).<BR>
+                           Jump if Zero.</TD>
+                           <TD ALIGN=Center>ZF = 1</TD> <TD>JNE, JNZ</TD>
+	</TR>
+
+	<TR>
+    <TD>JNE , JNZ</TD> <TD>Jump if Not Equal (<FONT COLOR=red><></FONT>).<BR>
+                           Jump if Not Zero.</TD>
+                           <TD ALIGN=Center>ZF = 0</TD> <TD>JE, JZ</TD>
+	</TR>
+
+	<TR>
+    <TD>JG , JNLE</TD> <TD>Jump if Greater (<FONT COLOR=red>></FONT>).<BR>
+                           Jump if Not Less or Equal <NOBR>(<FONT COLOR=red>not &lt;=</FONT>).</NOBR></TD>
+                           <TD ALIGN=Center>ZF = 0<BR>and<BR>SF = OF</TD> <TD>JNG, JLE</TD>
+	</TR>
+
+	<TR>
+    <TD>JL , JNGE</TD> <TD>Jump if Less (<FONT COLOR=red><</FONT>).<BR>
+                           Jump if Not Greater or Equal <NOBR>(<FONT COLOR=red>not >=</FONT>).</NOBR></TD>
+                           <TD ALIGN=Center>SF &lt;> OF</TD> <TD>JNL, JGE</TD>
+	</TR>
+
+	<TR>
+    <TD>JGE , JNL</TD> <TD><NOBR>Jump if Greater or Equal (<FONT COLOR=red>>=</FONT>).</NOBR><BR>
+                           Jump if Not Less  (<FONT COLOR=red>not &lt;</FONT>).</TD>
+                           <TD ALIGN=Center>SF = OF</TD> <TD>JNGE, JL</TD>
+	</TR>
+
+
+	<TR>
+    <TD>JLE , JNG</TD> <TD><NOBR>Jump if Less or Equal (<FONT COLOR=red>&lt;=</FONT>).</NOBR><BR>
+                           Jump if Not Greater  <NOBR>(<FONT COLOR=red>not ></FONT>).</NOBR></TD>
+                           <TD ALIGN=Center>ZF = 1<BR>or<BR>SF <> OF</TD> <TD>JNLE, JG</TD>
+	</TR>
+
+	</TABLE>
+
+	</FONT>
+
+	<BR><BR>
+
+	<FONT FACE="Fixedsys">&lt;></FONT> - sign means not equal.
+
+
+<BR><BR><BR>
+
+	<B>Jump instructions for unsigned numbers</B>
+	<BR><BR>
+
+	<FONT FACE="Fixedsys">
+
+	<TABLE BORDER=1 CELLPADDING=7>
+	<TR>
+	<TD BGCOLOR=yellow>Instruction</TD> <TD BGCOLOR=yellow>Description</TD>
+	<TD BGCOLOR=yellow>Condition</TD>
+	<TD BGCOLOR=yellow>Opposite Instruction</TD>
+	</TR>
+
+	<TR>
+    <TD>JE , JZ</TD> <TD>Jump if Equal (<FONT COLOR=red>=</FONT>).<BR>
+                           Jump if Zero.</TD>
+                           <TD ALIGN=Center>ZF = 1</TD> <TD>JNE, JNZ</TD>
+	</TR>
+
+	<TR>
+    <TD>JNE , JNZ</TD> <TD>Jump if Not Equal (<FONT COLOR=red><></FONT>).<BR>
+                           Jump if Not Zero.</TD>
+                           <TD ALIGN=Center>ZF = 0</TD> <TD>JE, JZ</TD>
+	</TR>
+
+	<TR>
+    <TD>JA , JNBE</TD> <TD>Jump if Above (<FONT COLOR=red>></FONT>).<BR>
+                           Jump if Not Below or Equal <NOBR>(<FONT COLOR=red>not &lt;=</FONT>).</NOBR></TD>
+                           <TD ALIGN=Center>CF = 0<BR>and<BR>ZF = 0</TD> <TD>JNA, JBE</TD>
+	</TR>
+
+
+	<TR>
+    <TD><NOBR>JB , JNAE, JC</NOBR></TD> <TD>Jump if Below  (<FONT COLOR=red>&lt;</FONT>).<BR>
+                           Jump if Not Above or Equal <NOBR>(<FONT COLOR=red>not >=</FONT>).</NOBR><BR>
+                           Jump if Carry.</TD>
+                           <TD ALIGN=Center>CF = 1</TD> <TD>JNB, JAE, JNC</TD>
+	</TR>
+
+
+	<TR>
+    <TD><NOBR>JAE , JNB, JNC</NOBR></TD> <TD>Jump if Above or Equal (<FONT COLOR=red>>=</FONT>).<BR>
+                           Jump if Not Below <NOBR>(<FONT COLOR=red>not &lt;</FONT>).</NOBR><BR>
+                           Jump if Not Carry.</TD>
+                           <TD ALIGN=Center>CF = 0</TD> <TD>JNAE, JB</TD>
+	</TR>
+
+
+	<TR>
+    <TD><NOBR>JBE , JNA</NOBR></TD> <TD>Jump if Below or Equal (<FONT COLOR=red>&lt;=</FONT>).<BR>
+                           Jump if Not Above <NOBR>(<FONT COLOR=red>not ></FONT>).</NOBR></TD>
+                           <TD ALIGN=Center>CF = 1<BR>or<BR>ZF = 1</TD> <TD>JNBE, JA</TD>
+	</TR>
+
+	</TABLE>
+
+	</FONT>
+
+
+	<BR><BR>
+	Generally, when it is required to compare numeric values <B>CMP</B> instruction
+	is used (it does the same as <B>SUB</B> (subtract) instruction, but does not keep
+	the result,	just affects the flags).<BR><BR>
+	The logic is very simple, for example:<BR>
+	it's required to compare
+	<FONT FACE="Fixedsys">5</FONT> and <FONT FACE="Fixedsys">2</FONT>,<BR>
+	<FONT FACE="Fixedsys">5 - 2 = 3</FONT><BR>
+	the result is not zero (Zero Flag
+	is set to <FONT FACE="Fixedsys">0</FONT>).
+
+	<BR><BR>
+	Another example:<BR>
+	it's required to compare <FONT FACE="Fixedsys">7</FONT> and
+	<FONT FACE="Fixedsys">7</FONT>,<BR>
+    <FONT FACE="Fixedsys">7 - 7 = 0</FONT><BR>
+    the result is zero! (Zero Flag
+	is set to <FONT FACE="Fixedsys">1</FONT> and <B>JZ</B> or <B>JE</B> will do the jump).
+
+	<BR><BR>
+ Here is an example of <B>CMP</B> instruction and conditional jump:<BR><BR>
+
+<TABLE BORDER=1 CELLPADDING=10 WIDTH=50%><TR><TD>
+<PRE><FONT FACE="Fixedsys">
+include emu8086.inc
+
+ORG    100h
+
+MOV    AL, 25     ; set AL to 25.
+MOV    BL, 10     ; set BL to 10.
+
+CMP    AL, BL     ; compare AL - BL.
+
+JE     equal      ; jump if AL = BL (ZF = 1).
+
+PUTC   'N'        ; if it gets here, then AL &lt;> BL,
+JMP    stop       ; so print 'N', and jump to stop.
+
+equal:            ; if gets here,
+PUTC   'Y'        ; then AL = BL, so print 'Y'.
+
+stop:
+
+RET               ; gets here no matter what.
+
+END</FONT></PRE>
+</TD></TR></TABLE>
+
+<BR><BR>
+Try the above example with different numbers for <B>AL</B> and <B>BL</B>,
+open flags by clicking on [<B>FLAGS</B>] button, use [<B>Single Step</B>]
+and see what happens, don't forget to recompile and reload after every change
+(use <B>F5</B> shortcut).
+
+<BR><BR>
+
+<HR>
+
+<BR>
+All conditional jumps have one big limitation, unlike <B>JMP</B> instruction
+they can only jump <B>127</B> bytes forward and <B>128</B> bytes backward (note that most
+instructions are assembled into 3 or more bytes).
+<BR><BR>
+We can easily avoid this limitation using a cute trick:<BR><BR>
+		<UL>
+		<LI>Get a opposite conditional jump instruction from the table above,
+			make it jump to <I>label_x</I>.
+			 <BR><BR></LI>
+		<LI>Use <B>JMP</B> instruction to jump to desired location.
+			 <BR><BR></LI>
+		<LI>Define <I>label_x:</I> just after the <B>JMP</B> instruction.
+			 <BR><BR></LI>
+		</UL>
+
+		<I>label_x:</I> - can be any valid label name.
+
+		<BR><BR>
+
+		Here is an example:<BR><BR>
+
+<TABLE BORDER=1 CELLPADDING=10 WIDTH=50%><TR><TD>
+<PRE><FONT FACE="Fixedsys">
+include emu8086.inc
+
+ORG    100h
+
+MOV    AL, 25     ; set AL to 25.
+MOV    BL, 10     ; set BL to 10.
+
+CMP    AL, BL     ; compare AL - BL.
+
+<FONT COLOR=green>
+JNE    not_equal  ; jump if AL &lt;> BL (ZF = 0).
+JMP    equal
+not_equal:
+</FONT>
+
+; let's assume that here we
+; have a code that is assembled
+; to more then 127 bytes...
+
+
+PUTC   'N'        ; if it gets here, then AL &lt;> BL,
+JMP    stop       ; so print 'N', and jump to stop.
+
+equal:            ; if gets here,
+PUTC   'Y'        ; then AL = BL, so print 'Y'.
+
+stop:
+
+RET               ; gets here no matter what.
+
+END</FONT></PRE>
+</TD></TR></TABLE>
+
+</UL>
+
+<BR><BR>
+
+<HR>
+
+<BR>
+Another, yet rarely used method is providing an immediate value instead
+of label. When immediate value starts with $ relative jump
+is performed, otherwise compiler calculates instruction that jumps directly
+to given offset. For example:<BR><BR>
+<TABLE BORDER=1 CELLPADDING=10 WIDTH=50%><TR><TD>
+<PRE><FONT FACE="Fixedsys">ORG    100h
+
+; unconditional jump forward:
+; skip over next 2 bytes,
+JMP $2
+a DB 3    ; 1 byte.
+b DB 4    ; 1 byte.
+
+; conditional jump back 7 bytes:
+MOV BL,9
+DEC BL      ; 2 bytes.
+CMP BL, 0   ; 3 bytes.
+JNE $-7     ; 2 bytes (must jump backwards over itself).
+
+RET
+</FONT></PRE>
+</TD></TR></TABLE>
+
+
+<BR><BR><BR>
+
+<HR>
+<CENTER>
+<A HREF="asm_tutorial_06.html"><B> &lt;&lt;&lt; Previous Part &lt;&lt;&lt; </B></A>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<A HREF="asm_tutorial_08.html"><B> >>> Next Part >>> </B></A>
+</CENTER>
+<HR>
+
+
+
+<BR>
+
+</FONT>
+
+
+</BODY>
+
+</HTML>

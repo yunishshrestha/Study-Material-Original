@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- String: Collection of numbers, alphabets and special characters, etc -->
+     <script>
+        let str = "Yunish Shrestha"
+        document.write("<br>String: ", str)
+        document.write("<br>String: ",typeof(str))
+
+        document.write("<br>Length: ", str.length)
+        document.write("<br>First Character: ", str[0])
+        document.write("<br>Last Character: ", str[str.length - 1])
+
+        //slice(startIndex, endIndex) - > extract a part of the string. end is not included. negative index is allowed.
+        document.write("<br>Slice: ", str.slice(0, 9))
+        document.write("<br>Slice: ", str.slice(-6,str.length))
+        document.write("<br>Slice: ", str.slice(-6))
+
+        //substring(startIndex, endIndex) - > to extract a part of the string. end is not included. no negative index
+        document.write("<br>Substring: ", str.substring(0, 9))
+        document.write("<br>Substring: ", str.substring(0, 9))
+
+        //main difference between slice and substring is that slice allows negative index while substring does not allow negative index.
+        
+        //substr(startIndex, length) - > to extract a part of the string. length is included. index can be negative but length cannot be negative.
+
+        document.write("<br>Substr: ", str.substr(0, 9))
+
+        //upperCase() - > to convert string to uppercase
+        document.write("<br>Uppercase: ", str.toUpperCase())
+
+        //lowerCase() - > to convert string to lowercase
+        document.write("<br>Lowercase: ", str.toLowerCase())
+
+        document.write("<br>Character at index 5: ", str.charAt(5))
+        document.write("<br>Character at index 5: ", str.charCodeAt(5))
+        
+        //search
+        document.write("<br>S is present at index: ", str.search('S'))
+        // seach Shrestha
+        document.write("<br>Shrestha is present at index: ", str.search('Shrestha'))
+        document.write("<br>SHRESTHA is present at index: ", str.search('SHRESTHA'))
+        //search case insensitive
+        document.write("<br>shrestha is present at index: ", str.search(/shrestha/i))
+
+        //starts with
+        document.write("<br>Starts with Yunish Shrestha: ", str.startsWith('Yunish Shrestha'))
+        //ends with
+        document.write("<br>Ends with Yunish Shrestha: ", str.endsWith('Yunish Shrestha'))
+        //includes
+        document.write("<br>Includes  Shrestha: ", str.includes('Shrestha'))
+
+        //concatination
+        let new_str = str.concat(' is a student')
+        document.write("<br>Concatination: ", new_str)
+
+        new_str = " " + ' is a student'
+        document.write("<br>Concatination: ", new_str)
+
+        //template literals
+        new_str = `${str} is a student`
+        document.write("<br>Template literals: ", new_str)
+
+        // //replace, replaceALL
+        // new_str = str.replace('Yunish', 'Yunisha')
+        // document.write("<br>Replace: ", new_str)
+
+        // new_str = str.replaceAll('Yunish', 'Yunisha')
+        // document.write("<br>Replace All: ", new_str)
+
+        // //case insensitive replace
+        // new_str = str.replace(/Yunish/i, 'Yunisha')
+        // document.write("<br>Case Insensitive Replace: ", new_str)
+
+        //repeat
+        new_str = str.repeat(3)
+        document.write("<br>Repeat: ", new_str)
+        new_str = "Hello World! ".repeat(3)
+        document.write("<br>Repeat: ", new_str)
+
+        //padstart, padend
+        let num = "123"
+        document.write("<br>Pad Start: ", num.padStart(7, '0'))
+        document.write("<br>Pad End: ", num.padEnd(7, 'X'))
+
+        //trim, trimStart, trimEnd - removes whitespace from the string
+        let name="         Sharad     "
+        document.write("<br>Length: ", name.length)
+        document.write("<br>Trim: ", name.trim())
+        document.write("<br>Length: ", name.trim().length)
+        document.write("<br>Trim Start: ", name.trimStart())
+        document.write("<br>Trim Start Length: ", name.trimStart().length)
+        document.write("<br>Trim End: ", name.trimEnd())
+        document.write("<br>Length: ", name.trimEnd().length)
+
+
+        //split - > to split a string into an array of substrings
+        document.write("<br>String: ",str)
+       let words= str.split(' ')
+       document.write("<br> No of words: ",words.length)
+       document.write("<br> Words: ",words)
+
+       str=str.repeat(5)
+       let sentences=str.split('.')
+       document.write("<br> No of sentences: ", sentences.length)
+       document.write("<ol>")
+        sentences.map(sentence => document.write("<li>", sentence, "</li>"))
+        document.write("<ol>")
+
+
+
+
+     </script>
+</body>
+</html>
